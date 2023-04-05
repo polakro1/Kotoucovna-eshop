@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Kotoučovna - eshop</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div th:fragment="header">
+  <header>
+    <div id="header-left">
+      <image src="/images/Logo.svg" alt="Kotoučovna eshop logo"></image>
+    </div>
+    <div id="header-center">
+      <div id="search">
+        <form>
+          <button type="submit"></button>
+          <input type="search">
+        </form>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a href="/suplementy/produkty">Suplementy</a>
+          </li>
+          <li>
+            <a href="/obleceni/produkty">Oblečení</a>
+          </li>
+          <li>
+            <a href="/doplnky/produkty">Doplňky</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div id="header-right">
+      <div>
+
+        <a th:href="@{/login-user}" sec:authorize="isAnonymous()">Přihlášení</a>
+        <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Odhlásit</a>
+        <a th:href="@{/cart}" id="kosik" th:text="${@cart.getSumPrice()}">1050 Kč</a>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a href="sluzby.html">Služby fitness centra</a>
+          </li>
+          <li id="clenstvi">
+            <a href="clenstvi.html">Členství</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+</div>
+</body>
+</html>

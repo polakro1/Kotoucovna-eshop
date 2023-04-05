@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kotoučovna eshop - administration</title>
+</head>
+<body>
+<div th:each="product : ${products}">
+  <p th:text="${product.name}">Nazev</p>
+  <p th:text="${product.descriptionShort}">Popis</p>
+  <p th:text="${product.quantity}">Quantity</p>
+  <p th:text="${product.price}">Cena</p>
+    <a th:href="@{/admin/product/edit(product=${product.id})}">Upravit</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kotoučovna eshop - administration</title>
+</head>
+<body>
+<h1 th:text="${product.name}">Název</h1>
+<form th:action="@{/admin/product/edit(product=${product.id})}" method="post" th:object="${product}">
+    <label for="name">Název</label>
+    <input type="text" id="name" name="name" th:field="*{name}">
+    <label for="price">Cena</label>
+    <input type="number" id="price" name="price" th:field="*{price}">
+    <label for="quantity">Quantity</label>
+    <input type="number" id="quantity" name="quantity" th:field="*{quantity}">
+    <label for="descriptionShort">Stručný popis</label>
+    <input type="text" id="descriptionShort" name="descriptionShort" th:field="*{descriptionShort}">
+    <label for="descriptionFull">Úplný popis</label>
+    <input type="text" id="descriptionFull" name="descriptionFull" th:field="*{description}">
+    <label for="category">Kategorie</label>
+    <select id="category" th:field="*{category.id}">
+        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.getName()}">Kategorie</option>
+    </select>
+    <input type="submit" value="Upravit">
+</form>
+<form th:action="@{/admin/product/delete}" method="post">
+    <button type="submit" name="productid" th:value="${product.id}" th:text="Odstranit"></button>
+</form>
+<p></p>
+</body>
+</html>
