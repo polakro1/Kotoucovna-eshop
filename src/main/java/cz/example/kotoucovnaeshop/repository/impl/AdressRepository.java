@@ -4,25 +4,31 @@ import cz.example.kotoucovnaeshop.model.Adress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.Map;
 
 @Repository
 public class AdressRepository {
-    private SimpleJdbcInsert simpleJdbcInsert;
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    private SimpleJdbcInsert simpleJdbcInsert;
 
-    public void setDataSource(DataSource dataSource) {
-        this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("adresy");
+    private void initializeSimpleJdbcInsert() {
+        this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("adresy")
+                .usingGeneratedKeyColumns("adresaid");
     }
 
     public Adress getAdress(long adressId) {
         Adress adress = jdbcTemplate.queryForObject(
-                "select cislo_popisne, mesto, psc, ulice, zeme, adresaid from adresy",
+                "select cislo_popisne, mesto, psc, ulice, zeme, adresaid from adresy " +
+                        "where adresaid = ?",
                 (rs, rowNum) -> {
                     Adress newAdress = new Adress(
                             rs.getLong("adresaid"),
@@ -33,7 +39,7 @@ public class AdressRepository {
                             rs.getString("zeme")
                     );
                     return newAdress;
-                }
+                }, adressId
         );
         return adress;
     }
@@ -48,6 +54,9 @@ public class AdressRepository {
                 adress.getPostalCode(),
                 adress.getCountry());
          */
+        if (simpleJdbcInsert == null) {
+            initializeSimpleJdbcInsert();
+        }
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ulice", adress.getStreet());
         parameters.put("cislo_popisne", adress.getBuildingNumber());

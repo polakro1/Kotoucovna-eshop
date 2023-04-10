@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/checkout1}" method="post">
+<form th:action="@{/cart/checkout1}" method="post">
     <div>
         <div th:each="paymentType : ${paymentTypes}">
             <label th:for="${paymentType.name}">

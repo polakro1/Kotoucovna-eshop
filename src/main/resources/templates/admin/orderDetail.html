@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 th:text="'Objednávka č. ' + ${order.id}"></h1>
+<p th:text="${order.orderState.nazev}"></p>
+<form th:action="@{/admin/order}" method="post">
+    <button th:if="${order.orderState.id == 1}" type="submit" name="orderId" th:formaction="@{/admin/order/confirm}" th:value="${order.id}">Potvrdit objednávku</button>
+    <button th:if="${order.orderState.id == 2}" type="submit" name="orderId" th:formaction="@{/admin/order/confirm-shipping}" th:value="${order.id}">Potvrdit odeslání</button>
+    <button th:if="${order.orderState.id == 3}" type="submit" name="orderId" th:formaction="@{/admin/order/confirm-delivery}" th:value="${order.id}">Potvrdit doručení</button>
+</form>
+
+</body>
+</html>

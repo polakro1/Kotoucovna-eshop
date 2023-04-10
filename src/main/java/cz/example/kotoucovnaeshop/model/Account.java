@@ -1,16 +1,10 @@
 package cz.example.kotoucovnaeshop.model;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Account {
-    private long id;
+    private Long id;
     private String email;
     private String password;
     private String username;
@@ -115,5 +109,13 @@ public abstract class Account {
 
     public void addRole(String role) {
         roles.add(role);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

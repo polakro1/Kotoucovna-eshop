@@ -16,4 +16,12 @@ public class UserService {
         client.addRole("USER");
         userRepository.saveUser(client);
     }
+
+    public Long saveUser(Client client) {
+        return userRepository.saveUser(client);
+    }
+
+    public Client getByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

@@ -7,7 +7,9 @@
 <body>
 <h1>Objednávky</h1>
 <div th:each="order : ${orders}">
-  <p th:text=""></p>
+    <p th:text="'Číslo objednávky: ' + ${order.id}"></p>
+    <p th:text="'Datum objednání: ' + ${order.orderDate}"></p>
+    <a th:href="@{/admin/order(order=${order.id})}">Detail</a>
 </div>
 </body>
 </html>

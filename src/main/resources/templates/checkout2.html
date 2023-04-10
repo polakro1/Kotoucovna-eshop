@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/checkout2}" method="post">
+<form th:action="@{/cart/checkout2}" method="post">
     <div th:object="${client}">
         <h2>Osobní údaje</h2>
         <label for="email">Email</label>
@@ -25,7 +25,7 @@
         <label for="SAcity">Město</label>
         <input type="text" id="SAcity" th:field="*{city}">
         <label for="SApostalCode">Poštovní směrovací číslo</label>
-        <input type="tel" id="SApostalCode" th:field="*{postalCode}">
+        <input type="tel" id="SApostalCode" pattern="[0-9]{5}" th:field="*{postalCode}">
         <label for="SAcountry">Země</label>
         <input type="tel" id="SAcountry" th:field="${shippingAdress.country}">
     </div>
@@ -37,7 +37,7 @@
         <label for="BAcity">Město</label>
         <input type="text" id="BAcity" th:value="*{city}">
         <label for="BApostalCode">Poštovní směrovací číslo</label>
-        <input type="tel" id="BApostalCode" th:value="*{postalCode}">
+        <input type="tel" id="BApostalCode" pattern="\d\d\d\d\d" th:value="*{postalCode}">
         <label for="BAcountry">Země</label>
         <input type="tel" id="BAcountry" th:value="${billingAdress.country}">
     </div>

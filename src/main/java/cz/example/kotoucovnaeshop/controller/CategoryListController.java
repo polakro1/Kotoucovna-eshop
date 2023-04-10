@@ -33,6 +33,7 @@ public class CategoryListController {
         System.out.println(products.size());
         model.addAttribute("products", products);
 
+
         System.out.println(SecurityContextHolder.getContext().getAuthentication());
         for (Product product :
                 products) {

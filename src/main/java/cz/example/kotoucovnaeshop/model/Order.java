@@ -1,17 +1,22 @@
 package cz.example.kotoucovnaeshop.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 public class Order {
     private long id;
-    private Date orderDate;
+    private LocalDateTime orderDate;
     private Date shippingDate;
     private Adress shippingAdress;
     private Adress billingAdress;
     private Client client;
     private Employee employee;
     private List<OrderItem> orderItems;
+
+    private PaymentType paymentType;
+    private ShippingType shippingType;
+    private OrderState orderState;
 
 
     public long getId() {
@@ -22,11 +27,11 @@ public class Order {
         this.id = id;
     }
 
-    public Date getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -54,14 +59,6 @@ public class Order {
         this.billingAdress = billingAdress;
     }
 
-    public Client getKlient() {
-        return client;
-    }
-
-    public void setKlient(Client client) {
-        this.client = client;
-    }
-
     public Employee getEmployee() {
         return employee;
     }
@@ -76,5 +73,37 @@ public class Order {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public ShippingType getShippingType() {
+        return shippingType;
+    }
+
+    public void setShippingType(ShippingType shippingType) {
+        this.shippingType = shippingType;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public OrderState getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
     }
 }

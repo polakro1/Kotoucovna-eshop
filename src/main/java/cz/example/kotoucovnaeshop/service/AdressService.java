@@ -13,4 +13,8 @@ public class AdressService {
     public Adress getAdress(long adressId) {
         return repository.getAdress(adressId);
     }
+
+    public long saveAdress(Adress adress) {
+        return repository.saveAdress(adress);
+    }
 }
