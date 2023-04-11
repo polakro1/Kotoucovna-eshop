@@ -38,6 +38,7 @@ public class SecurityConfiguration {
             "/cart/**",
             "/admin/login",
             "/registration",
+            "/search/**"
     };
 
     @Bean

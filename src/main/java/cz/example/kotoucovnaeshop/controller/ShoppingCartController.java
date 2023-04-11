@@ -94,4 +94,11 @@ public class ShoppingCartController {
         System.out.println(order.getShippingType().getName());
         return "redirect:/cart/create-order";
     }
+
+    @PostMapping("cart/deleteItem")
+    public String deleteItem(@ModelAttribute("itemIndex") int itemIndex) {
+        cartService.deleteItem(itemIndex);
+
+        return "redirect:/cart";
+    }
 }

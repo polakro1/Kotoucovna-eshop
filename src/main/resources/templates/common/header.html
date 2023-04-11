@@ -13,9 +13,9 @@
     </div>
     <div id="header-center">
       <div id="search">
-        <form>
+        <form th:action="@{/search}" method="get">
           <button type="submit"></button>
-          <input type="search">
+          <input type="search" name="search">
         </form>
       </div>
       <nav>

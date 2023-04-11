@@ -26,7 +26,7 @@ public class ClientController {
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("client") Client client,
-                               @ModelAttribute("Adress") Adress adress) {
+                               @ModelAttribute("adress") Adress adress) {
         System.out.println(client.getPassword());
         userService.createUser(client);
         userDetailsService.authenticateUser(client.getUsername());

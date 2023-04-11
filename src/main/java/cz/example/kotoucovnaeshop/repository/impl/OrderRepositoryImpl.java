@@ -164,4 +164,15 @@ public class OrderRepositoryImpl {
                 order.getId());
     }
 
+    public List<Order> getOrdersByClient(Client client) {
+        List<Order> orders = jdbcTemplate.query(
+                "select objednavkaid, datum_dodani, datum_objednani, adresa_dodani,adresa_fakturace, " +
+                        "typy_platbyid, typ_dopravyid, stav_objednavkyid, zakaznikid, zamestnanecid from objednavky " +
+                        "where zakaznikid = ?",
+                orderRowMapper,
+                client.getId()
+        );
+        return orders;
+    }
+
 }

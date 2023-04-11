@@ -1,5 +1,6 @@
 package cz.example.kotoucovnaeshop.service;
 
+import cz.example.kotoucovnaeshop.model.Client;
 import cz.example.kotoucovnaeshop.model.Employee;
 import cz.example.kotoucovnaeshop.model.Order;
 import cz.example.kotoucovnaeshop.model.OrderState;
@@ -52,5 +53,9 @@ public class OrderService {
             orderRepository.setConfirmEmployee(order);
         }
         orderRepository.updateOrderState(order, orderState);
+    }
+
+    public List<Order> getOrdersByClient(Client client) {
+        return orderRepository.getOrdersByClient(client);
     }
 }

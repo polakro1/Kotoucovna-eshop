@@ -18,7 +18,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public List<Product> findAllByCategory(Category category) {
         List<Product> products = jdbcTemplate.query(
-                "select produktid, cena, mnozstvi, nazev, popis, popis_strucny, obrazek from produkty where kategorieid = ?" ,
+                "select produktid, cena, mnozstvi, nazev, popis, popis_strucny, obrazek from produkty " +
+                        "where kategorieid = ? or " +
+                        "kategorieid in (select kategorieid from kategorie where nadkategorie = ?)" ,
                 (rs, rowNum) -> {
                     Product newProduct = new Product(
                             rs.getLong("produktid"),
@@ -31,7 +33,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                             category
                     );
                     return newProduct;
-                }, category.getId());
+                }, category.getId(), category.getId());
         return products;
     }
 
@@ -101,5 +103,26 @@ public class ProductRepositoryImpl implements ProductRepository {
     public void delete(Product product) {
         jdbcTemplate.update("delete from produkty where produktid = ?",
                 product.getId());
+    }
+
+    public List<Product> matchByName(String name) {
+        List<Product> products = jdbcTemplate.query(
+                "select produktid, cena, mnozstvi, nazev, popis, popis_strucny, kategorieid, obrazek from produkty " +
+                        "where nazev like '%test%'",
+                (rs, rowNum) -> {
+                    Product newProduct = new Product(
+                            rs.getLong("produktid"),
+                            rs.getDouble("cena"),
+                            rs.getInt("mnozstvi"),
+                            rs.getString("nazev"),
+                            rs.getString("popis_strucny"),
+                            rs.getString("popis"),
+                            rs.getString("obrazek"),
+                            categoryRepository.getById(rs.getLong("kategorieid"))
+                    );
+                    return newProduct;
+                }
+                );
+        return products;
     }
 }

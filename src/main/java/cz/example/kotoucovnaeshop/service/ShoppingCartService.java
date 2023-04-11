@@ -48,4 +48,12 @@ public class ShoppingCartService {
 
         return orderItems;
     }
+
+    public void clearCart() {
+        cart.getItems().clear();
+    }
+
+    public void deleteItem(int index) {
+        cart.getItems().remove(index);
+    }
 }

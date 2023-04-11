@@ -3,6 +3,7 @@ package cz.example.kotoucovnaeshop.controller;
 import cz.example.kotoucovnaeshop.model.Order;
 import cz.example.kotoucovnaeshop.model.OrderState;
 import cz.example.kotoucovnaeshop.service.OrderService;
+import cz.example.kotoucovnaeshop.service.ShoppingCartService;
 import cz.example.kotoucovnaeshop.service.TypesAndStatesService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import java.util.List;
 @Controller
 public class OrderController {
     @Autowired
+    private ShoppingCartService shoppingCartService;
+    @Autowired
     private OrderService orderService;
     @GetMapping("admin/orders")
     public String manageOrders(Model model) {
@@ -27,6 +30,7 @@ public class OrderController {
     @GetMapping("/cart/create-order")
     public String createOrder(@SessionAttribute Order order) {
         orderService.saveOrder(order);
+        shoppingCartService.clearCart();
 
         return "redirect:/cart";
     }

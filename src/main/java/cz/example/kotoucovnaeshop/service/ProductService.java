@@ -50,4 +50,8 @@ public class ProductService {
     public void uploadImage(MultipartFile image) throws IOException {
         imageRepository.upload(image);
     }
+
+    public List<Product> getMatchedByName(String name) {
+        return repository.matchByName(name);
+    }
 }

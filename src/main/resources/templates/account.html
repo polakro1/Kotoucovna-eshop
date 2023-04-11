@@ -4,5 +4,9 @@
 <body>
 <header th:replace="common/header :: header"/>
 <p th:text="${client.username}">text</p>
+<div th:each="order : ${orders}">
+    <p th:text="${order.id}"></p>
+
+</div>
 </body>
 </html>

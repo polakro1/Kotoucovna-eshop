@@ -8,6 +8,9 @@
 <h1>Košík</h1>
 <div th:each="cartItem : ${cart.getItems()}">
   <p th:text="${cartItem.getProduct().getName()}"></p>
+    <form th:action="@{/cart/deleteItem}" method="post">
+        <button type="submit" name="itemIndex" th:value="${cartItemStat.index}">-</button>
+    </form>
 </div>
 </body>
 </html>

@@ -15,8 +15,8 @@
         <div class="hr">
             <hr>
         </div>
-        <div class="items" th:each="product : ${products}">
-            <div class="item">
+        <div class="items">
+            <div class="item" th:each="product : ${products}">
                 <img th:src=" ${product.imageUrl}">
                 <h4 th:text="${product.getName()}">Název</h4>
                 <p th:text="${product.getDescriptionShort}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis.</p>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: head"/>
+<body>
+<header th:replace="common/header :: header"/>
+<h1 th:text="'Výsledek vyhledávání: ' + ${searchValue}"></h1>
+<div class="hr">
+  <hr>
+</div>
+<div class="items" th:each="product : ${products}">
+  <div class="item">
+    <img th:src=" ${product.imageUrl}">
+    <h4 th:text="${product.getName()}">Název</h4>
+    <p th:text="${product.getDescriptionShort}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis.</p>
+    <p class="cena" th:text="${product.price}">499 Kč</p>
+    <div class="item-actions">
+      <p class="skladem">Skladem</p>
+      <div>
+        <a class="detail">Detail</a>
+        <form th:action="@{/cart/add}" method="post">
+          <button type="submit" name="productid" th:value="${product.id}">Do košíku</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
