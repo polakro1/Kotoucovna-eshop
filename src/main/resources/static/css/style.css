@@ -108,7 +108,7 @@ nav ul li {
 }
 
 #search button {
-    background: url(images/icons/search_icon.svg) no-repeat;
+    background: url(/images/icons/search_icon.svg) no-repeat;
     background-position: center;
     background-size: 80%;
     border: none;
@@ -151,7 +151,7 @@ nav ul li {
 }
 
 #kosik {
-    background: url(images/icons/kosik_icon.svg) no-repeat;
+    background: url(/images/icons/kosik_icon.svg) no-repeat;
     background-size: 2.5rem;
     line-height: 2.5rem;
     background-position: left center;
@@ -162,6 +162,9 @@ nav ul li {
     margin-left: auto;
 }
 
+input {
+    height: 1.5rem;
+}
 
 .items {
     display: grid;
@@ -173,9 +176,11 @@ nav ul li {
 .item {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     max-width: 500px;
     text-align: end;
     padding: 10px;
+    height: 500px;
 }
 
 .item img {
@@ -450,13 +455,14 @@ footer nav a {
     color: white;
 }
 
-#kosik-kroky {
+.kosik-kroky {
     display: flex;
     justify-content: center;
     gap: 20px;
 }
 
-#kosik-kroky a {
+
+.kosik-kroky a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -465,6 +471,10 @@ footer nav a {
     height: 100px;
     font-family: Broshk;
     font-size: 2.3rem;
+}
+
+#aktivni-krok {
+    background-color: #FFAB2B;
 }
 
 .width60 {
@@ -510,11 +520,14 @@ footer nav a {
     margin: 50px auto 0 auto;
     display: flex;
     flex-direction: column;
+    gap: 5px;
     width: fit-content;
     text-align: center;
+    font-family: BroshK;
+    font-size: 1.5rem;
 }
 
-.pokracovat-v-objednavce button {
+.pokracovat-v-objednavce a:first-child {
     background-color: #FFAB2B;
     border: none;
     padding: 1.5rem;
@@ -580,7 +593,7 @@ footer nav a {
 }
 
 .zmena-udaju {
-    align-items: ce;
+    align-items: center;
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -597,14 +610,22 @@ footer nav a {
 
 .zmena-udaju > div {
     display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.zmena-udaju > div > div {
+    display: flex;
     justify-content: space-between;
 }
 
-.zmena-udaju > div > div:nth-child(even) {
+.zmena-udaju > div > div > div:nth-child(even) {
     text-align: end;
 }
 
-.zmena-udaju > div > div:nth-child(odd) {
+
+.zmena-udaju > div > div > div:nth-child(odd) {
     text-align: start;
 }
 
@@ -614,7 +635,7 @@ footer nav a {
 }
 
 .zmena-udaju button {
-    width: 9rem;
+    width: auto;
     margin: auto;
     font-size: 2.5rem;
     padding: 10px;
@@ -633,10 +654,16 @@ footer nav a {
     justify-content: space-between;
 }
 
-.objednavka div {
+.objednavka div:first-of-type {
     text-align: end;
     display: flex;
     gap: 10px;
+}
+
+.objednavka-polozky {
+    display: flex;
+    flex-direction: column;
+    margin: 0 33px 0 10%;
 }
 
 .detail-objednavky {
@@ -651,4 +678,52 @@ footer nav a {
 .polozka-objednavky div {
     display: flex;
     gap: 40px;
+}
+
+.zpusoby-objednavky-form {
+    text-align: center;
+    padding: 0 20%;
+}
+
+.zpusoby-objednavky-form button {
+    background-color: #FFAB2B;
+    border: none;
+    padding: 1.5rem;
+    font-size: 2.5rem;
+}
+
+.zpusoby-objednavky-form > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10%;
+}
+
+.zpusob-objednavky {
+    display: flex;
+    justify-content: space-between;
+}
+
+.zpusob-objednavky label {
+    text-align: start;
+}
+
+.objednavka-osobni-udaje {
+    width: 30%;
+    margin: auto;
+}
+
+.objednavka-osobni-udaje > div {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+}
+
+#adresessAreSame {
+    height: 30px;
+    width: 30px;
+}
+
+#adresessAreSame:checked ~ #adresa-fakturace {
+    display: none;
 }

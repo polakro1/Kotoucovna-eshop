@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@font-face {
+    font-family: 'BroshK';
+    src: url(../fonts/broshk/BroshK_repaired.ttf) format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+.product-list > div {
+    display: grid;
+    grid-template-columns: 3fr 5fr 1fr 1fr 1fr 1fr;
+    column-gap: 20px;
+}
+
+.order-list > div {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.order-items > div {
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr 1fr;
+}
+
+.order-details-first {
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-details-state {
+    display: flex;
+    gap: 15px;
+}

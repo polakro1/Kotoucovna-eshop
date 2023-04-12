@@ -8,7 +8,9 @@
 <body>
   <header th:fragment="header">
     <div id="header-left">
-      <image src="/images/Logo.svg" alt="Kotoučovna eshop logo"></image>
+      <a href="index.html">
+        <image src="/images/Logo.svg" alt="Kotoučovna eshop logo"></image>
+      </a>
     </div>
     <div id="header-center">
       <div id="search">
@@ -33,10 +35,14 @@
     </div>
     <div id="header-right">
       <div>
-
-        <a th:href="@{/login-user}" sec:authorize="isAnonymous()">Přihlášení</a>
-        <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Odhlásit</a>
-        <a th:href="@{/cart}" id="kosik" th:text="${@cart.getSumPrice()}">1050 Kč</a>
+        <div>
+          <a th:href="@{/ucet}">
+            <img src="/images/icons/account_icon.svg" alt="account_icon" width="30px">
+          </a>
+          <a th:href="@{/login-user}" sec:authorize="isAnonymous()">Přihlášení</a>
+          <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Odhlásit</a>
+        </div>
+        <a th:href="@{/cart}" id="kosik" th:text="${@cart.getSumPrice() + ' Kč'}">1050 Kč</a>
       </div>
       <nav>
         <ul>
@@ -60,17 +66,17 @@
     </div>
     <div class="odkazy">
       <a>
-        <img src="Images/icons/tel_icon.svg" alt="Telefon">
+        <img src="/images/icons/tel_icon.svg" alt="Telefon">
         <p>697 728 543</p>
       </a>
       <a>
-        <img src="Images/icons/email_icon.svg" alt="Email">
+        <img src="/images/icons/email_icon.svg" alt="Email">
         <p>info@kotoucovna.cz</p>
       </a>
       <div id="footer-icons">
-        <a><img src="Images/icons/facebook_icon.svg" alt="Facebook"></a>
-        <a><img src="Images/icons/instagram_icon.svg" alt="Instagram"></a>
-        <a><img src="Images/icons/tiktok_icon.svg" alt="TikTok"></a>
+        <a><img src="/images/icons/facebook_icon.svg" alt="Facebook"></a>
+        <a><img src="/images/icons/instagram_icon.svg" alt="Instagram"></a>
+        <a><img src="/images/icons/tiktok_icon.svg" alt="TikTok"></a>
       </div>
     </div>
     <div>

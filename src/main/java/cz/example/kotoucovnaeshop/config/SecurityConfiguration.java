@@ -52,7 +52,7 @@ public class SecurityConfiguration {
                 )
                 .formLogin(form -> form
                         .loginPage("/admin/login")
-                        .defaultSuccessUrl("/admin/products")
+                        .defaultSuccessUrl("/admin/dashboard")
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -79,7 +79,7 @@ public class SecurityConfiguration {
                          )
                 .formLogin(form -> form
                         .loginPage("/login-user")
-                        .defaultSuccessUrl("/suplementy/produkty")
+                        .defaultSuccessUrl("/ucet", true)
                         .permitAll()
                         )
                 .logout(logout -> logout

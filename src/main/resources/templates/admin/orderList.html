@@ -3,13 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/css/adminStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h1>Objednávky</h1>
-<div th:each="order : ${orders}">
-    <p th:text="'Číslo objednávky: ' + ${order.id}"></p>
-    <p th:text="'Datum objednání: ' + ${order.orderDate}"></p>
-    <a th:href="@{/admin/order(order=${order.id})}">Detail</a>
+<div class="order-list">
+    <div>
+        <p>Číslo objednávky</p>
+        <p>Datum objednání</p>
+        <p>Typ dopravy</p>
+        <p>Typ platby</p>
+        <p>Stav objednávky</p>
+        <p>Celková cena</p>
+    </div>
+    <div th:each="order : ${orders}">
+        <p th:text="${order.id}"></p>
+        <p th:text="${order.orderDate}"></p>
+        <p th:text="${order.shippingType.name}"></p>
+        <p th:text="${order.paymentType.name}"></p>
+        <p th:text="${order.orderState.nazev}"></p>
+        <p th:text="${order.getSumPrice() + ' Kč'}"></p>
+        <a th:href="@{/admin/order(order=${order.id})}">Detail</a>
+    </div>
 </div>
+
 </body>
 </html>

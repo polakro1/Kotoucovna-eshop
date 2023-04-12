@@ -5,8 +5,8 @@
 <header th:replace="common/header :: header"/>
 <main>
     <h1>Košík</h1>
-    <div id="kosik-kroky">
-        <a href="">Krok 1</a>
+    <div class="kosik-kroky">
+        <a href="" id="aktivni-krok">Krok 1</a>
         <a href="">Krok 2</a>
         <a href="">Krok 3</a>
     </div>
@@ -26,18 +26,6 @@
                 <button type="submit" name="itemIndex" th:value="${cartItemStat.index}">X</button>
             </form>
         </div>
-        <div class="polozky-kosiku">
-            <p>Název položky</p>
-            <p>1 ks</p>
-            <p>550 Kč</p>
-            <button>X</button>
-        </div>
-        <div class="polozky-kosiku">
-            <p>Název položky</p>
-            <p>1 ks</p>
-            <p>500 Kč</p>
-            <button>X</button>
-        </div>
     </div>
     <div class="width60 cena-celkem">
         <div class="cena-dph">
@@ -46,11 +34,11 @@
         </div>
         <div class="cena-bez-dph">
             <p>Cena bez DPH</p>
-            <p>830 Kč</p>
+            <p th:text="${cart.getSumPrice() * 0.79}">830 Kč</p>
         </div>
     </div>
     <div class="pokracovat-v-objednavce">
-        <button>Pokračovat v objednávce</button>
+        <a th:href="@{/cart/checkout1}">Pokračovat v objednávce</a>
         <a href="index.html">Zpět k nákupu</a>
     </div>
 </main>

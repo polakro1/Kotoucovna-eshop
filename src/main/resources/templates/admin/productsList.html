@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Kotoučovna eshop - administration</title>
+    <link href="/css/adminStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div th:each="product : ${products}">
-  <p th:text="${product.name}">Nazev</p>
-  <p th:text="${product.descriptionShort}">Popis</p>
-  <p th:text="${product.quantity}">Quantity</p>
-  <p th:text="${product.price}">Cena</p>
-    <a th:href="@{/admin/product/edit(product=${product.id})}">Upravit</a>
+<div class="product-list">
+    <div>
+        <p>Název produktu</p>
+        <p>Krátky popis</p>
+        <p>Množství na skladě</p>
+        <p>Cena</p>
+        <p>Kategorie</p>
+    </div>
+    <div th:each="product : ${products}">
+        <p th:text="${product.name}">Nazev</p>
+        <p th:text="${product.descriptionShort}">Popis</p>
+        <p th:text="${product.quantity}">Quantity</p>
+        <p th:text="${product.price}">Cena</p>
+        <p th:text="${product.getCategory().name}"></p>
+        <a th:href="@{/admin/product/edit(product=${product.id})}">Upravit</a>
+    </div>
 </div>
-
 </body>
 </html>

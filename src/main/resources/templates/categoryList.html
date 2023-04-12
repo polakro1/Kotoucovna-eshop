@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="cs" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="common/header :: head"/>
+    <head th:replace="~{common/header :: head}"/>
     <body>
-        <header th:replace="common/header :: header"/>
+        <header th:replace="~{common/header :: header}"/>
         <div class="kategorie">
             <h1 th:text="${category.name}"></h1>
             <div class="podkategorie">
@@ -20,18 +20,18 @@
                 <img th:src=" ${product.imageUrl}">
                 <h4 th:text="${product.getName()}">Název</h4>
                 <p th:text="${product.getDescriptionShort}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis.</p>
-                <p class="cena" th:text="${product.price}">499 Kč</p>
+                <p class="cena" th:text="${product.price + ' Kč'}">499 Kč</p>
                 <div class="item-actions">
                     <p class="skladem">Skladem</p>
                     <div>
                         <a class="detail">Detail</a>
                         <form th:action="@{/cart/add}" method="post">
-                            <button type="submit" name="productid" th:value="${product.id}">Do košíku</button>
+                            <button type="submit" name="productid" th:value="${product.id}" class="do-kosiku-btn">Do košíku</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    <footer th:replace="common/header.html :: footer"/>
+    <footer th:replace="~{common/header.html :: footer}"/>
     </body>
 </html>

@@ -3,10 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/css/adminStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h1 th:text="'Objednávka č. ' + ${order.id}"></h1>
-<p th:text="${order.orderState.nazev}"></p>
+<div class="order-details-first">
+    <div>
+        <p>Datum objednání</p>
+        <p th:text="${order.orderDate}"></p>
+    </div>
+    <div class="order-details-state">
+        <div>
+            <p>Stav objednávky</p>
+            <p th:text="${order.orderState.nazev}"></p>
+        </div>
+        <div th:if="${order.orderState.id != 1}">
+            <p>Příjal</p>
+            <p th:text="${order.employee.name + ' ' + order.employee.surname}"></p>
+        </div>
+    </div>
+</div>
+<div class="order-items">
+    <h2>Položky objednávky</h2>
+    <div>
+        <p>ID produktu</p>
+        <p>Název produktu</p>
+        <p>Množství</p>
+        <p>Cena</p>
+    </div>
+    <div th:each="orderItem : ${order.orderItems}">
+        <p th:text="${orderItem.product.id}"></p>
+        <p th:text="${orderItem.product.name}"></p>
+        <p th:text="${orderItem.quantity}"></p>
+        <p th:text="${orderItem.price}"></p>
+    </div>
+</div>
+<div>
+    <h2>Dodací údaje</h2>
+    <div>
+        <div>
+            <p>Typ dopravy</p>
+            <p th:text="${order.shippingType.name}"></p>
+        </div>
+        <div>
+            <p>Typ platby</p>
+            <p th:text="${order.paymentType.name}"></p>
+        </div>
+    </div>
+    <div>
+        <div>
+            <p>Email</p>
+
+        </div>
+    </div>
+</div>
 <form th:action="@{/admin/order}" method="post">
     <button th:if="${order.orderState.id == 1}" type="submit" name="orderId" th:formaction="@{/admin/order/confirm}" th:value="${order.id}">Potvrdit objednávku</button>
     <button th:if="${order.orderState.id == 2}" type="submit" name="orderId" th:formaction="@{/admin/order/confirm-shipping}" th:value="${order.id}">Potvrdit odeslání</button>

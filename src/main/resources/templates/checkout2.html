@@ -1,47 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="~{common/header :: head}"/>
 <body>
-<form th:action="@{/cart/checkout2}" method="post">
+<header th:replace="~{common/header :: header}"/>
+<h1>Košík</h1>
+<div class="kosik-kroky">
+    <a href="">Krok 1</a>
+    <a href="">Krok 2</a>
+    <a href="" id="aktivni-krok">Krok 3</a>
+</div>
+<hr>
+<form th:action="@{/cart/checkout2}" method="post" class="zmena-udaju">
     <div th:object="${client}">
         <h2>Osobní údaje</h2>
         <label for="email">Email</label>
         <input type="email" id="email" th:field="*{email}">
-        <label for="name">Jméno</label>
-        <input type="text" id="name" th:field="*{name}">
-        <label for="surname">Příjmení</label>
-        <input type="text" id="surname" th:field="*{surname}">
+        <div>
+            <div>
+                <label for="name">Jméno</label>
+                <input type="text" id="name" th:field="*{name}">
+            </div>
+            <div>
+                <label for="surname">Příjmení</label>
+                <input type="text" id="surname" th:field="*{surname}">
+            </div>
+        </div>
         <label for="tel">Telefon</label>
         <input type="tel" id="tel" th:field="*{tel}">
     </div>
     <div th:object="${shippingAdress}">
+        <h3>Dodací adresa</h3>
         <label for="SAstreet">Ulice</label>
         <input type="text" id="SAstreet" th:field="*{street}">
-        <label for="SAbuildingNumber">Číslo popisné</label>
-        <input type="text" id="SAbuildingNumber" th:field="*{buildingNumber}">
+        <div>
+            <div>
+                <label for="SAbuildingNumber">Číslo popisné</label>
+                <input type="text" id="SAbuildingNumber" th:field="*{buildingNumber}">
+            </div>
+            <div>
+                <label for="SApostalCode">Poštovní směrovací číslo</label>
+                <input type="tel" id="SApostalCode" pattern="[0-9]{5}" th:field="*{postalCode}">
+            </div>
+        </div>
         <label for="SAcity">Město</label>
         <input type="text" id="SAcity" th:field="*{city}">
-        <label for="SApostalCode">Poštovní směrovací číslo</label>
-        <input type="tel" id="SApostalCode" pattern="[0-9]{5}" th:field="*{postalCode}">
         <label for="SAcountry">Země</label>
         <input type="tel" id="SAcountry" th:field="${shippingAdress.country}">
     </div>
-    <div th:object="${billingAdress}">
+    <hr>
+    <label for="adresessAreSame">Adresa fakturace stejná jako dodací</label>
+    <input type="checkbox" name="adressesAreSame" id="adresessAreSame">
+    <div th:object="${billingAdress}" id="adresa-fakturace">
+        <h3>Adresa fakturace</h3>
         <label for="BAstreet">Ulice</label>
         <input type="text" id="BAstreet" th:value="*{street}">
-        <label for="BAbuildingNumber">Číslo popisné</label>
-        <input type="text" id="BAbuildingNumber" th:value="*{buildingNumber}">
+        <div>
+            <div>
+                <label for="BAbuildingNumber">Číslo popisné</label>
+                <input type="text" id="BAbuildingNumber" th:field="*{buildingNumber}">
+            </div>
+            <div>
+                <label for="BApostalCode">Poštovní směrovací číslo</label>
+                <input type="tel" id="BApostalCode" pattern="[0-9]{5}" th:field="*{postalCode}">
+            </div>
+        </div>
         <label for="BAcity">Město</label>
         <input type="text" id="BAcity" th:value="*{city}">
-        <label for="BApostalCode">Poštovní směrovací číslo</label>
-        <input type="tel" id="BApostalCode" pattern="\d\d\d\d\d" th:value="*{postalCode}">
         <label for="BAcountry">Země</label>
         <input type="tel" id="BAcountry" th:value="${billingAdress.country}">
+        <hr>
     </div>
-    <input type="submit">
+    <button type="submit">Odeslat objednávku</button>
 </form>
+<footer th:replace="~{common/header :: footer}"/>
 </body>
 </html>

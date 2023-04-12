@@ -3,11 +3,6 @@
 <head th:replace="~{common/header :: head}"/>
 <body>
 <header th:replace="~{common/header :: header}"/>
-<p th:text="${client.username}">text</p>
-<div th:each="order : ${orders}">
-    <p th:text="${order.id}"></p>
-
-</div>
 <main>
     <h1>Účet</h1>
     <form action="" class="zmena-udaju">
@@ -37,13 +32,15 @@
     <hr>
     <h2>Objednávky</h2>
     <div class="objednavky">
-        <div class="objednavka" th:each="order : ${orders}">
-            <p th:text="${'Objednávka č. ' + order.id}">Objednávka č.1</p>
-            <div>
-                <p th:text="${order.getSumPrice() + ' Kč'}">500 Kč</p>
-                <button>v</button>
+        <div th:each="order : ${orders}">
+            <div class="objednavka">
+                <p th:text="${'Objednávka č. ' + order.id}">Objednávka č.1</p>
+                <div>
+                    <p th:text="${order.getSumPrice() + ' Kč'}">500 Kč</p>
+                    <button>v</button>
+                </div>
             </div>
-            <div>
+            <div class="objednavka-polozky">
                 <div class="polozka-objednavky" th:each="orderItem : ${order.orderItems}">
                     <p th:text="${orderItem.product.name}">Název položky</p>
                     <div>
