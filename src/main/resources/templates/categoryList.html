@@ -4,7 +4,7 @@
     <body>
         <header th:replace="common/header :: header"/>
         <div class="kategorie">
-            <h1 th:text="${category.name}">Kategorie</h1>
+            <h1 th:text="${category.name}"></h1>
             <div class="podkategorie">
                 <a th:each="subcategory : ${subcategories}"
                    th:href="@{/{categoryPath}/produkty(categoryPath=${#strings.toLowerCase(subcategory.name)})}">
@@ -32,5 +32,6 @@
                 </div>
             </div>
         </div>
+    <footer th:replace="common/header.html :: footer"/>
     </body>
 </html>

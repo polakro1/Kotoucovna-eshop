@@ -106,4 +106,13 @@ public class Order {
     public void setOrderState(OrderState orderState) {
         this.orderState = orderState;
     }
+
+    public double getSumPrice() {
+        double sum = 0;
+        for (OrderItem orderItem :
+                orderItems) {
+            sum += orderItem.getPrice();
+        }
+        return sum;
+    }
 }

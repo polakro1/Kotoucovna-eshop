@@ -1,16 +1,59 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="~{common/header :: head}"/>
 <body>
-<h1>Košík</h1>
-<div th:each="cartItem : ${cart.getItems()}">
-  <p th:text="${cartItem.getProduct().getName()}"></p>
-    <form th:action="@{/cart/deleteItem}" method="post">
-        <button type="submit" name="itemIndex" th:value="${cartItemStat.index}">-</button>
-    </form>
-</div>
+<header th:replace="common/header :: header"/>
+<main>
+    <h1>Košík</h1>
+    <div id="kosik-kroky">
+        <a href="">Krok 1</a>
+        <a href="">Krok 2</a>
+        <a href="">Krok 3</a>
+    </div>
+    <hr>
+    <div class="width60">
+        <div class="polozky-kosiku">
+            <p>Položka</p>
+            <p>Množství</p>
+            <p>Cena</p>
+            <p></p>
+        </div>
+        <div th:each="cartItem : ${cart.getItems()}" class="polozky-kosiku">
+            <p th:text="${cartItem.getProduct().getName()}"></p>
+            <p th:text="${cartItem.getQuantity() + ' ks'}"></p>
+            <p th:text="${cartItem.getProduct().getPrice() + ' Kč'}"></p>
+            <form th:action="@{/cart/deleteItem}" method="post">
+                <button type="submit" name="itemIndex" th:value="${cartItemStat.index}">X</button>
+            </form>
+        </div>
+        <div class="polozky-kosiku">
+            <p>Název položky</p>
+            <p>1 ks</p>
+            <p>550 Kč</p>
+            <button>X</button>
+        </div>
+        <div class="polozky-kosiku">
+            <p>Název položky</p>
+            <p>1 ks</p>
+            <p>500 Kč</p>
+            <button>X</button>
+        </div>
+    </div>
+    <div class="width60 cena-celkem">
+        <div class="cena-dph">
+            <p>Cena celkem</p>
+            <p th:text="${cart.getSumPrice() + ' Kč'}">0</p>
+        </div>
+        <div class="cena-bez-dph">
+            <p>Cena bez DPH</p>
+            <p>830 Kč</p>
+        </div>
+    </div>
+    <div class="pokracovat-v-objednavce">
+        <button>Pokračovat v objednávce</button>
+        <a href="index.html">Zpět k nákupu</a>
+    </div>
+</main>
+<footer th:replace="~{common/header :: footer}"/>
 </body>
 </html>

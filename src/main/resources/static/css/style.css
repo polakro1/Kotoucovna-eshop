@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 @font-face {
-    font-family: BroshK;
-    src: url(../fonts/broshk/BroshK.otf);
+    font-family: 'BroshK';
+    src: url(../fonts/broshk/BroshK_repaired.ttf) format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
 }
 
-header, nav, h1, h2, h3, h4 {
+header a, nav a, h1, h2, h3, h4 {
     font-family: BroshK;
     color: #000000;
 }
@@ -20,7 +23,7 @@ h1, h2, h3, h4{
 h1 {
     font-size: 4.5rem;
     margin-bottom: 0;
-    margin-top: 0.5rem;
+
 }
 h2 {
     font-size: 4rem;
@@ -43,10 +46,12 @@ a {
 button {
     font-family: Broshk;
     font-size: 1.3rem;
+    background-color: #FFAB2B;
+    border: none;
 }
 
 body {
-    margin: 0;
+    margin: 0px;
     font-family: "Opens Sans";
 }
 
@@ -103,7 +108,7 @@ nav ul li {
 }
 
 #search button {
-    background: url(../images/icons/search_icon.svg) no-repeat;
+    background: url(images/icons/search_icon.svg) no-repeat;
     background-position: center;
     background-size: 80%;
     border: none;
@@ -146,7 +151,7 @@ nav ul li {
 }
 
 #kosik {
-    background: url(../images/icons/kosik_icon.svg) no-repeat;
+    background: url(images/icons/kosik_icon.svg) no-repeat;
     background-size: 2.5rem;
     line-height: 2.5rem;
     background-position: left center;
@@ -171,6 +176,10 @@ nav ul li {
     max-width: 500px;
     text-align: end;
     padding: 10px;
+}
+
+.item img {
+    width: 100%;
 }
 
 
@@ -237,7 +246,7 @@ nav ul li {
     column-gap: 30px;
     row-gap: 0.6rem;
 
-margin: auto;
+    margin: auto;
 }
 
 .podkategorie h3 {
@@ -313,3 +322,333 @@ margin: auto;
     font-size: 1.3rem;
 }
 
+#splash-img > img{
+    object-fit: cover;
+    width: 100%;
+    height: 30vw;
+    min-height: 300px;
+    clip-path: polygon(0 0, 0 100%, 100% 90%, 100% 0);
+}
+#splash-img {
+    position: relative;
+    text-align: center;
+}
+
+body  hr {
+    width: 60%;
+}
+
+.vitejte {
+    text-align: center;
+    padding-bottom: 50px;
+}
+.vitejte p {
+    padding:0 20%;
+}
+
+.vitejte h1 {
+    margin-top: 0.5rem;
+}
+
+.ikonky-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    padding: 0 15%;
+}
+
+.ikonky {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.075);
+    border-radius: 10px;
+    padding: 10px;
+
+}
+
+.ikonky > div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.ikonky img {
+    width: 60%;
+}
+
+.ikonky h2 {
+    margin: 0;
+    color: #000000;
+}
+
+footer {
+    margin-top: 100px;
+    background-color: #3A3A3A;
+    padding: 4% 0 0 0;
+    clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 20%);
+}
+footer > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 3rem;
+}
+footer > div > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    
+}
+.kontakt-ikony {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+
+footer h3, footer p {
+    margin: 0;
+    color: white;
+}
+#oteviraci-doba-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 1rem;
+}
+.odkazy {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.odkazy a {
+    gap: 1rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+#footer-icons {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+footer nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+footer nav a {
+    font-size: 1.6rem;
+    color: white;
+}
+
+#kosik-kroky {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#kosik-kroky a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.075);
+    width: 150px;
+    height: 100px;
+    font-family: Broshk;
+    font-size: 2.3rem;
+}
+
+.width60 {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.polozky-kosiku {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 30px;
+    align-items: center;
+}
+
+.polozky-kosiku button {
+    height: 30px;
+    background-color: white;
+    border: solid 1px #000000;
+
+}
+
+.cena-celkem {
+    margin-top: 50px;
+}
+
+.cena-celkem > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cena-celkem p {
+    margin: 0;
+}
+
+.cena-dph  p{
+    font-family: Broshk;
+    font-size: 2.3rem;
+}
+.cena-bez-dph p {
+    font-size: 1rem;
+}
+
+.pokracovat-v-objednavce {
+    margin: 50px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    text-align: center;
+}
+
+.pokracovat-v-objednavce button {
+    background-color: #FFAB2B;
+    border: none;
+    padding: 1.5rem;
+    font-size: 2.5rem;
+}
+
+.clenstvi {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    gap: 15px;
+}
+
+.clenstvi > div {
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.clenstvi h2 {
+    margin: 0;
+    color: #000000;
+}
+.clenstvi button {
+    margin-top: 20px;
+    font-size: 2rem;
+    padding: 10px;
+    background-color: #FFAB2B;
+    border: none;
+}
+
+#zlate {
+    background-image: linear-gradient(gold, white);
+}
+
+#stribrne {
+    background-image: linear-gradient(silver, white);
+}
+
+#bronzove {
+    background-image: linear-gradient(#CD7F32, white);
+}
+
+.permanentky {
+    margin: 40px 20% 0 20%;
+}
+
+.permanentka {
+    display: grid;
+    grid-template-columns: 4fr 2fr 2fr 1fr;
+    padding: 15px;
+    align-items: center;
+}
+
+.permanentka h3, .permanentka p {
+    margin: 0;
+}
+
+.permanentka h3 {
+    color: #000000;
+}
+
+.zmena-udaju {
+    align-items: ce;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 30%;
+    text-align: center;
+    font-family: "Open Sans";
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.zmena-udaju input {
+    height: 1.5rem;
+}
+
+.zmena-udaju > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.zmena-udaju > div > div:nth-child(even) {
+    text-align: end;
+}
+
+.zmena-udaju > div > div:nth-child(odd) {
+    text-align: start;
+}
+
+.zmena-udaju h3 {
+    margin: 0;
+    color: #000000;
+}
+
+.zmena-udaju button {
+    width: 9rem;
+    margin: auto;
+    font-size: 2.5rem;
+    padding: 10px;
+}
+
+.objednavky {
+    width: 60%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.objednavka {
+    display: flex;
+    justify-content: space-between;
+}
+
+.objednavka div {
+    text-align: end;
+    display: flex;
+    gap: 10px;
+}
+
+.detail-objednavky {
+    margin: 0 33px 0 10%;
+}
+
+.polozka-objednavky {
+    display: flex;
+    justify-content: space-between;
+}
+
+.polozka-objednavky div {
+    display: flex;
+    gap: 40px;
+}

@@ -1,12 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/header :: head"/>
+<head th:replace="~{common/header :: head}"/>
 <body>
-<header th:replace="common/header :: header"/>
+<header th:replace="~{common/header :: header}"/>
 <p th:text="${client.username}">text</p>
 <div th:each="order : ${orders}">
     <p th:text="${order.id}"></p>
 
 </div>
+<main>
+    <h1>Účet</h1>
+    <form action="" class="zmena-udaju">
+        <div th:object="${client}">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" th:field="*{email}">
+        </div>
+        <div th:object="${client.adress}">
+            <h3>Adresa</h3>
+            <label for="ulice">Ulice</label>
+            <input type="text" name="ulice" id="ulice" th:field="*{street}">
+            <div>
+                <div>
+                    <label for="cislo-popisne">Číslo popisné</label>
+                    <input type="text" name="cislo-popisne" id="cislo-popisne">
+                </div>
+                <div>
+                    <label for="psc">Psč</label>
+                    <input type="text" name="psc" id="psc">
+                </div>
+            </div>
+            <label for="mesto">Město</label>
+            <input type="text" name="mesto" id="mesto">
+        </div>
+        <button type="submit">Změnit</button>
+    </form>
+    <hr>
+    <h2>Objednávky</h2>
+    <div class="objednavky">
+        <div class="objednavka" th:each="order : ${orders}">
+            <p th:text="${'Objednávka č. ' + order.id}">Objednávka č.1</p>
+            <div>
+                <p th:text="${order.getSumPrice() + ' Kč'}">500 Kč</p>
+                <button>v</button>
+            </div>
+            <div>
+                <div class="polozka-objednavky" th:each="orderItem : ${order.orderItems}">
+                    <p th:text="${orderItem.product.name}">Název položky</p>
+                    <div>
+                        <p th:text="${orderItem.quantity + ' ks'}">1 ks</p>
+                        <p th:text="${orderItem.price + ' Kč'}">250 Kč</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{common/header :: footer}"/>
 </body>
 </html>
