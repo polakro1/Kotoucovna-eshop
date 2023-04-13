@@ -32,10 +32,6 @@
             <p>Cena celkem</p>
             <p th:text="${cart.getSumPrice() + ' Kč'}">0</p>
         </div>
-        <div class="cena-bez-dph">
-            <p>Cena bez DPH</p>
-            <p th:text="${cart.getSumPrice() * 0.79}">830 Kč</p>
-        </div>
     </div>
     <div class="pokracovat-v-objednavce">
         <a th:href="@{/cart/checkout1}">Pokračovat v objednávce</a>

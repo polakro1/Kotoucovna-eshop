@@ -24,7 +24,7 @@
                 <div class="item-actions">
                     <p class="skladem">Skladem</p>
                     <div>
-                        <a class="detail">Detail</a>
+                        <a th:href="@{/{categoryPath}/produkt/{produktId}(categoryPath=${#strings.toLowerCase(product.category.name)}, produktId = ${product.id})}" class="detail">Detail</a>
                         <form th:action="@{/cart/add}" method="post">
                             <button type="submit" name="productid" th:value="${product.id}" class="do-kosiku-btn">Do košíku</button>
                         </form>

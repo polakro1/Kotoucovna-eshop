@@ -66,4 +66,12 @@ public class ProductController {
         return "redirect:/admin/products";
     }
 
+    @GetMapping("/{category}/produkt/{productId}")
+    public String productDetail(@PathVariable long productId, Model model) {
+        System.out.println(productId);
+        Product product = productService.getProductById(productId);
+        model.addAttribute("product", product);
+
+        return "productDetail";
+    }
 }

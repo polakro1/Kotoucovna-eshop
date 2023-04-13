@@ -35,6 +35,7 @@ public class SecurityConfiguration {
             "/images/**",
             "/login-user",
             "/*/produkty",
+            "/*/produkt/**",
             "/cart/**",
             "/admin/login",
             "/registration",
