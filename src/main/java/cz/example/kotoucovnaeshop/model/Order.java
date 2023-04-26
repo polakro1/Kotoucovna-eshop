@@ -1,13 +1,13 @@
 package cz.example.kotoucovnaeshop.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public class Order {
     private long id;
     private LocalDateTime orderDate;
-    private Date shippingDate;
+    private LocalDate shippingDate;
     private Adress shippingAdress;
     private Adress billingAdress;
     private Client client;
@@ -35,11 +35,11 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public Date getShippingDate() {
+    public LocalDate getShippingDate() {
         return shippingDate;
     }
 
-    public void setShippingDate(Date shippingDate) {
+    public void setShippingDate(LocalDate shippingDate) {
         this.shippingDate = shippingDate;
     }
 

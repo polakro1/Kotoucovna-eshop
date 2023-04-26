@@ -14,7 +14,7 @@ public class UserService {
     public void createUser(Client client) {
         client.setPassword(SecurityUtility.passwordEncoder().encode(client.getPassword()));
         client.addRole("USER");
-        userRepository.saveUser(client);
+        saveUser(client);
     }
 
     public Long saveUser(Client client) {

@@ -40,6 +40,13 @@ public class ShoppingCartController {
         return "redirect:/cart";
     }
 
+    @PostMapping("/cart")
+    public String continueToOrder(@ModelAttribute Cart cart, HttpSession session) {
+        System.out.println(cart.getItems().get(1).getQuantity());
+
+        return "";
+    }
+
     @GetMapping("/cart/checkout1")
     public String checkout1(Model model) {
         model.addAttribute("paymentTypes", typesAndStatesService.getAllPaymentTypes());

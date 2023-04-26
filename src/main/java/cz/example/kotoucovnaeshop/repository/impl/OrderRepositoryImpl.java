@@ -8,13 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +41,12 @@ public class OrderRepositoryImpl {
     private final RowMapper<Order> orderRowMapper = (resultSet, rowNum) -> {
         Order order = new Order();
         order.setId(resultSet.getLong("objednavkaid"));
-        order.setShippingDate(resultSet.getDate("datum_dodani"));
+        Date shippingDate = resultSet.getDate("datum_dodani");
+        if (shippingDate != null) {
+            order.setShippingDate(shippingDate.toLocalDate());
+        } else {
+            order.setShippingDate(null);
+        }
         order.setOrderDate(resultSet.getTimestamp("datum_objednani").toLocalDateTime());
         order.setShippingAdress(
                 adressService.getAdress(resultSet.getLong("adresa_dodani"))
@@ -125,6 +128,12 @@ public class OrderRepositoryImpl {
             );
         }
     }
+/*
+    private void saveAdressee(Order order) {
+        jdbcTemplate.update("update adresati")
+    }
+
+ */
     private List<OrderItem> getOrderItems(Order order) {
         List<OrderItem> orderItems = jdbcTemplate.query(
                 "select polozky_objednavkyid, cena, mnozstvi, produktyId from polozky_objednavky " +
@@ -173,6 +182,21 @@ public class OrderRepositoryImpl {
                 client.getId()
         );
         return orders;
+    }
+
+    public List<Order> getUnconfirmedOrders() {
+        List<Order> orders = jdbcTemplate.query(
+                "select objednavkaid, datum_dodani, datum_objednani, adresa_dodani,adresa_fakturace," +
+                        "typy_platbyid, typ_dopravyid, stav_objednavkyid, zakaznikid, zamestnanecid from objednavky " +
+                        "where stav_objednavkyid = 1" ,
+                orderRowMapper);
+        return orders;
+    }
+
+    public void updateShippingDate(Order order, LocalDate shippingDate) {
+        jdbcTemplate.update("update objednavky set datum_dodani = ? where objednavkaid = ?",
+                shippingDate,
+                order.getId());
     }
 
 }

@@ -8,9 +8,16 @@
 <body>
 <h1 th:text="'Objednávka č. ' + ${order.id}"></h1>
 <div class="order-details-first">
-    <div>
-        <p>Datum objednání</p>
-        <p th:text="${order.orderDate}"></p>
+    <div class="order-details-state">
+        <div>
+            <p>Datum objednání</p>
+            <p th:text="${order.orderDate}"></p>
+        </div>
+        <div>
+            <p>Datum dodání</p>
+            <p th:if="${order.shippingDate != null}" th:text="${order.shippingDate}"></p>
+            <p th:if="${order.shippingDate == null}">Neodeslána</p>
+        </div>
     </div>
     <div class="order-details-state">
         <div>
@@ -59,6 +66,7 @@
 </div>
 <form th:action="@{/admin/order}" method="post">
     <button th:if="${order.orderState.id == 1}" type="submit" name="orderId" th:formaction="@{/admin/order/confirm}" th:value="${order.id}">Potvrdit objednávku</button>
+    <input th:if="${order.orderState.id == 2}" type="date" name="shippingDate">
     <button th:if="${order.orderState.id == 2}" type="submit" name="orderId" th:formaction="@{/admin/order/confirm-shipping}" th:value="${order.id}">Potvrdit odeslání</button>
     <button th:if="${order.orderState.id == 3}" type="submit" name="orderId" th:formaction="@{/admin/order/confirm-delivery}" th:value="${order.id}">Potvrdit doručení</button>
 </form>

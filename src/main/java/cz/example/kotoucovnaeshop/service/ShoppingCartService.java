@@ -1,11 +1,10 @@
 package cz.example.kotoucovnaeshop.service;
 
-import cz.example.kotoucovnaeshop.model.Cart;
-import cz.example.kotoucovnaeshop.model.CartItem;
-import cz.example.kotoucovnaeshop.model.OrderItem;
-import cz.example.kotoucovnaeshop.model.Product;
+import cz.example.kotoucovnaeshop.model.*;
+import cz.example.kotoucovnaeshop.repository.impl.ShoppingCartRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,9 +16,17 @@ public class ShoppingCartService {
     private HttpSession httpSession;
     @Autowired
     private Cart cart;
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
+    @Autowired
+    private UserService userService;
 
 
     public void addItem (Product product, int quantity) {
+        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+            Client client = userService.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+            shoppingCartRepository.addItem(product, quantity, client);
+        }
         cart.addItem(product, quantity);
     }
 
@@ -50,10 +57,21 @@ public class ShoppingCartService {
     }
 
     public void clearCart() {
+        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+            Client client = userService.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+            shoppingCartRepository.clear(client);
+        }
+
         cart.getItems().clear();
     }
-
     public void deleteItem(int index) {
+        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+            shoppingCartRepository.deleteItem(cart.getItems().get(index));
+        }
         cart.getItems().remove(index);
+    }
+
+    public void setCartByClient(Client client) {
+        cart.setItems(shoppingCartRepository.getCartItems(client));
     }
 }

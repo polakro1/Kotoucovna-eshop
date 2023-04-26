@@ -28,6 +28,7 @@ public class ClientController {
     public String registration(@ModelAttribute("client") Client client,
                                @ModelAttribute("adress") Adress adress) {
         System.out.println(client.getPassword());
+        client.setAdress(adress);
         userService.createUser(client);
         userDetailsService.authenticateUser(client.getUsername());
 

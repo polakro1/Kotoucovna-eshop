@@ -5,6 +5,9 @@ import cz.example.kotoucovnaeshop.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +20,7 @@ public class UserRepositoryImpl {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcInsert simpleJdbcInsert;
+    private SimpleJdbcCall procAddUser;
     @Autowired
     private AdressRepository adressRepository;
     private void initializeSimpleJdbcInsert() {
@@ -51,11 +55,12 @@ public class UserRepositoryImpl {
                 username);
         return client;
     }
-
+/*
     public Long saveUser(Client client) {
         if (simpleJdbcInsert == null) {
             initializeSimpleJdbcInsert();
         }
+
         Long adressId = null;
         if (client.getAdress() != null) {
             adressId = adressRepository.saveAdress(client.getAdress());
@@ -74,6 +79,29 @@ public class UserRepositoryImpl {
         parameters.put("adresaid", adressId);
         return simpleJdbcInsert.executeAndReturnKey(parameters).longValue();
     }
+
+ */
+public Long saveUser(Client client) {
+    if (procAddUser == null) {
+        procAddUser = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("registruj_uzivatele");
+    }
+    SqlParameterSource in = new MapSqlParameterSource()
+            .addValue("in_email", client.getEmail())
+            .addValue("in_username", client.getUsername())
+            .addValue("in_password", client.getPassword())
+            .addValue("in_name", client.getName())
+            .addValue("in_surname", client.getSurname())
+            .addValue("in_tel", client.getTel())
+            .addValue("in_street", client.getAdress().getStreet())
+            .addValue("in_building_number", client.getAdress().getBuildingNumber())
+            .addValue("in_city", client.getAdress().getCity())
+            .addValue("in_postal_code", client.getAdress().getPostalCode())
+            .addValue("in_country", client.getAdress().getCountry());
+
+    Map<String, Object> out = procAddUser.execute(in);
+    return (Long) out.get("out_clientid");
+}
 
     public Client findById(long id) {
         Client client = jdbcTemplate.queryForObject(

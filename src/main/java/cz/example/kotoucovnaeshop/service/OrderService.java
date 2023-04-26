@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -55,4 +56,12 @@ public class OrderService {
     public List<Order> getOrdersByClient(Client client) {
         return orderRepository.getOrdersByClient(client);
     }
+    public List<Order> getUnconfirmedOrders() {
+        return orderRepository.getUnconfirmedOrders();
+    }
+
+    public void updateShippingDate(Order order, LocalDate shippingDate) {
+        orderRepository.updateShippingDate(order, shippingDate);
+    }
 }
+

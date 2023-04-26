@@ -17,15 +17,15 @@
             <div>
                 <div>
                     <label for="cislo-popisne">Číslo popisné</label>
-                    <input type="text" name="cislo-popisne" id="cislo-popisne">
+                    <input type="text" name="cislo-popisne" id="cislo-popisne" th:field="*{buildingNumber}">
                 </div>
                 <div>
                     <label for="psc">Psč</label>
-                    <input type="text" name="psc" id="psc">
+                    <input type="text" name="psc" id="psc" th:field="*{postalCode}">
                 </div>
             </div>
             <label for="mesto">Město</label>
-            <input type="text" name="mesto" id="mesto">
+            <input type="text" name="mesto" id="mesto" th:field="*{city}">
         </div>
         <button type="submit">Změnit</button>
     </form>

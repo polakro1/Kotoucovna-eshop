@@ -4,6 +4,12 @@ public class CartItem {
     private Product product;
     private int quantity;
 
+    private long id;
+
+    public CartItem(){
+
+    }
+
     public CartItem(Product product, int quantity) {
         this.product = product;
         this.quantity = quantity;
@@ -23,5 +29,13 @@ public class CartItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

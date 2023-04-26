@@ -106,9 +106,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     public List<Product> matchByName(String name) {
+        name = "%" + name + "%";
+        System.out.println(name);
         List<Product> products = jdbcTemplate.query(
                 "select produktid, cena, mnozstvi, nazev, popis, popis_strucny, kategorieid, obrazek from produkty " +
-                        "where nazev like '%test%'",
+                        "where upper(nazev) like upper(?)",
                 (rs, rowNum) -> {
                     Product newProduct = new Product(
                             rs.getLong("produktid"),
@@ -121,7 +123,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                             categoryRepository.getById(rs.getLong("kategorieid"))
                     );
                     return newProduct;
-                }
+                }, name
                 );
         return products;
     }

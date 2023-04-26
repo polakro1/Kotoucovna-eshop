@@ -55,7 +55,7 @@ public class ProductController {
 
         productService.update(product);
 
-        return "categoryList";
+        return "redirect:/admin/product/edit?product=" + productId;
     }
     @PostMapping("/admin/product/delete")
     public String deleteProduct(@ModelAttribute("productid") long productid) {
