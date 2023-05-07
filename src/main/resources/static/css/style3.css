@@ -34,7 +34,7 @@ h3 {
 
 p {
     font-family: "Open Sans";
-    font-size: 1rem;
+    font-size: 1.125rem;
     color: #000000;
 
 }
@@ -220,10 +220,10 @@ nav ul li {
 
 .items {
     display: grid;
-    grid-template-columns: repeat(3, 320px);
-    grid-auto-rows: 450px;
+    grid-template-columns: repeat(3, 400px);
+    grid-auto-rows: 500px;
     justify-content: center;
-    gap: 5%;
+    column-gap: 5%;
 }
 
 @media screen and (max-width: 1070px) {
