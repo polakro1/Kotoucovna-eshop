@@ -1,7 +1,6 @@
 package cz.example.kotoucovnaeshop.controller;
 
 import cz.example.kotoucovnaeshop.model.Product;
-import cz.example.kotoucovnaeshop.repository.ProductRepository;
 import cz.example.kotoucovnaeshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,9 +16,15 @@ public class SearchController {
     private ProductService productService;
 
     @GetMapping("/search")
-    public String search(@RequestParam String search, Model model) {
+    public String search(@RequestParam String search, Model model,  String sortBy) {
         model.addAttribute("searchValue", search);
-        List<Product> products = productService.getMatchedByName(search);
+
+        if (sortBy == null) {
+            sortBy = productService.getRepository().NAME_ASC;
+        }
+        model.addAttribute("sortBy", sortBy);
+
+        List<Product> products = productService.getMatchedByName(search, sortBy);
         model.addAttribute("products", products);
 
         return "search";

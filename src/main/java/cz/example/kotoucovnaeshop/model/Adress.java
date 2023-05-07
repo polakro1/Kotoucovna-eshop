@@ -1,11 +1,25 @@
 package cz.example.kotoucovnaeshop.model;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 public class Adress {
     private long id;
+    @Size(max = 50)
+    @NotBlank
     private String street;
+    @Size(max = 4)
+    @NotBlank
     private String buildingNumber;
+    @Size(max = 50)
+    @NotBlank
     private String city;
+    @Pattern(regexp = "\\d{5}")
     private String postalCode;
+    @Size(max = 50)
+    @NotBlank
     private String country;
 
     public Adress() {

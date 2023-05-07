@@ -1,28 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Kotoučovna eshop - administration</title>
-</head>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/admin/common/common :: head ('Přidat produkt')}"></head>
 <body>
-<form th:action="@{/admin/product/add}" method="post" enctype="multipart/form-data" th:object="${product}">
-    <label for="name">Název</label>
-    <input type="text" id="name" name="name" th:field="*{name}">
-    <label for="price">Cena</label>
-    <input type="number" id="price" name="price" th:field="*{price}">
-    <label for="quantity">Quantity</label>
-    <input type="number" id="quantity" name="quantity" th:field="*{quantity}">
-    <label for="descriptionShort">Stručný popis</label>
-    <textarea id="descriptionShort" name="descriptionShort" th:field="*{descriptionShort}"></textarea>
-    <label for="descriptionFull">Úplný popis</label>
-    <textarea id="descriptionFull" name="descriptionFull" th:field="*{description}"></textarea>
-    <label for="category">Kategorie</label>
-    <select id="category" th:field="*{category.id}">
-        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.getName()}">Kategorie</option>
-    </select>
-    <label for="image">Obrázek</label>
-    <input type="file" id="image" name="image">
-    <input type="submit" value="Submit">
-</form>
+<header th:replace="~{/admin/common/common :: header}"></header>
+<main>
+    <h1>Přidat produkt</h1>
+    <form class="product-form"
+          th:action="@{/admin/product/add}" method="post" enctype="multipart/form-data" th:object="${product}">
+        <label for="image">Obrázek</label>
+        <span class="error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
+        <input type="file" id="image" name="imageFile">
+        <div class="product-name-price-quantity">
+            <div>
+                <label for="name">Název</label>
+                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                <input type="text" id="name" name="name" th:field="*{name}">
+            </div>
+            <div>
+                <label for="price">Cena</label>
+                <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+                <input type="number" id="price" name="price" th:field="*{price}">
+            </div>
+            <div>
+                <label for="quantity">Quantity</label>
+                <span class="error" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span>
+                <input type="number" id="quantity" name="quantity" th:field="*{quantity}">
+            </div>
+            <div>
+                <label for="category">Kategorie</label>
+                <select id="category" th:field="*{category.id}">
+                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.getName()}">Kategorie
+                    </option>
+                </select>
+            </div>
+        </div>
+        <label for="descriptionShort">Stručný popis</label>
+        <span class="error" th:if="${#fields.hasErrors('descriptionShort')}" th:errors="*{descriptionShort}"></span>
+        <textarea id="descriptionShort" name="descriptionShort" maxlength="120"
+                  th:field="*{descriptionShort}"></textarea>
+        <label for="descriptionFull">Úplný popis</label>
+        <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+        <textarea id="descriptionFull" name="descriptionFull" th:field="*{description}"></textarea>
+        <button class="potvrdit-btn" type="submit">Přidat</button>
+    </form>
+</main>
 </body>
 </html>

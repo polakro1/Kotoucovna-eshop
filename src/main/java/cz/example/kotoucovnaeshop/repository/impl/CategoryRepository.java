@@ -1,17 +1,15 @@
 package cz.example.kotoucovnaeshop.repository.impl;
 
 import cz.example.kotoucovnaeshop.model.Category;
-import cz.example.kotoucovnaeshop.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public class CategoryRepositoryImpl implements CategoryRepository {
+public class CategoryRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    @Override
     public List<Category> getAllCategories() {
         List<Category> categories = jdbcTemplate.query(
                 "select kategorieid, nazev, nadkategorie from kategorie",
@@ -26,7 +24,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         return categories;
     }
 
-    @Override
+
     public Category getById(long id) {
         Category category = jdbcTemplate.queryForObject(
                 "select kategorieid, nazev, nadkategorie from kategorie where kategorieid = ?",

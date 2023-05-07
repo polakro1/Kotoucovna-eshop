@@ -1,14 +1,28 @@
 package cz.example.kotoucovnaeshop.model;
 
+import jakarta.validation.GroupSequence;
+import jakarta.validation.constraints.*;
+import jakarta.validation.groups.Default;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@GroupSequence({Account.WithoutPassword.class, Account.class})
 public abstract class Account {
+    public interface WithoutPassword extends Default {};
     private Long id;
+    @NotBlank(groups = WithoutPassword.class)
+    @Email(regexp = "^(\\S+)\\@(\\S+)\\.(\\S+)$", groups = WithoutPassword.class)
     private String email;
+    @NotBlank
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$",
+            message = "Heslo musí obsahovat min. 8 znaků a alespoň jedno číslo a speciální znak")
     private String password;
+    @Size(min = 6, max = 30, groups = WithoutPassword.class)
     private String username;
+    @NotBlank(groups = WithoutPassword.class)
     private String name;
+    @NotBlank(groups = WithoutPassword.class)
     private String surname;
 
     private Set<String> roles = new HashSet<>();

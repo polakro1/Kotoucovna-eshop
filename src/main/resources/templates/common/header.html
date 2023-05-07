@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<head th:fragment="head">
+<head th:fragment="head (title)">
     <meta charset="UTF-8">
-    <title>Kotoučovna - eshop</title>
-    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title th:text="${title == null ? 'Kotoučovna - eshop': title + ' | Kotoučovna - eshop'}"></title>
+    <link href="/css/style3.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/icons/favicon.svg" sizes="any" type="image/svg+xml">
 </head>
 <body>
   <header th:fragment="header">
     <div id="header-left">
-      <a href="index.html">
+      <a href="../">
         <image src="/images/Logo.svg" alt="Kotoučovna eshop logo"></image>
       </a>
     </div>
@@ -39,14 +41,14 @@
           <a th:href="@{/ucet}">
             <img src="/images/icons/account_icon.svg" alt="account_icon" width="30px">
           </a>
-          <a th:href="@{/login-user}" sec:authorize="isAnonymous()">Přihlášení</a>
+          <a th:href="@{/login}" sec:authorize="isAnonymous()">Přihlášení</a>
           <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Odhlásit</a>
         </div>
-        <a th:href="@{/cart}" id="kosik" th:text="${@cart.getSumPrice() + ' Kč'}">1050 Kč</a>
+        <a th:href="@{/cart}" id="kosik" th:text="${#numbers.formatDecimal(@cart.getSumPrice(), 0, 0) + ' Kč'}">1050 Kč</a>
       </div>
     </div>
   </header>
-<footer th:fragment="footer">
+<footer id="footer-fix" th:fragment="footer">
   <div>
     <div>
       <h3>Fitness centrum Kotoučovna</h3>

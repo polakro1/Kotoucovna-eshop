@@ -1,28 +1,39 @@
 package cz.example.kotoucovnaeshop.model;
 
 
+import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.NumberFormat;
+
+import java.security.Signature;
+
 public class Product {
     private long id;
+    @Min(0)
     private double price;
+    @Min(0)
     private int quantity;
+    @NotBlank
+    @Size(max = 50)
     private String name;
+    @Size(max = 120)
     private String descriptionShort;
+    @Size(max = 1000)
     private String description;
     private Category category;
+    private Image image;
 
-    private String imageUrl;
+    private Employee employee;
 
     public Product() {
     }
 
-    public Product(long id, double price, int quantity, String name, String descriptionShort, String description, String imageUrl, Category category) {
+    public Product(long id, double price, int quantity, String name, String descriptionShort, String description, Category category) {
         this.id = id;
         this.price = price;
         this.quantity = quantity;
         this.name = name;
         this.descriptionShort = descriptionShort;
         this.description = description;
-        this.imageUrl = imageUrl;
         this.category = category;
     }
 
@@ -82,11 +93,19 @@ public class Product {
         this.category = category;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public Image getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

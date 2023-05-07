@@ -1,6 +1,5 @@
 package cz.example.kotoucovnaeshop.repository.impl;
 
-import cz.example.kotoucovnaeshop.model.Cart;
 import cz.example.kotoucovnaeshop.model.CartItem;
 import cz.example.kotoucovnaeshop.model.Client;
 import cz.example.kotoucovnaeshop.model.Product;
@@ -25,7 +24,7 @@ public class ShoppingCartRepository {
                     CartItem cartItem = new CartItem();
                     cartItem.setId(rs.getLong("polozky_kosikuid"));
                     cartItem.setQuantity(rs.getInt("mnozstvi"));
-                    cartItem.setProduct(productService.getProductById(rs.getLong("produktyid")));
+                    cartItem.setProduct(productService.getProduct(rs.getLong("produktyid")));
 
                     return cartItem;
                 }, client.getId()
@@ -51,5 +50,13 @@ public class ShoppingCartRepository {
     public void clear(Client client) {
         jdbcTemplate.update("delete from polozky_kosiku where zakazniciid = ?",
                 client.getId());
+    }
+
+    public void changeQuantity(CartItem cartItem, int quantity) {
+        jdbcTemplate.update(
+                "update polozky_kosiku set mnozstvi = ? where polozky_kosikuid = ?",
+                quantity,
+                cartItem.getId()
+        );
     }
 }

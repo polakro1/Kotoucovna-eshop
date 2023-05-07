@@ -1,10 +1,15 @@
 package cz.example.kotoucovnaeshop.model;
 
-public class Client extends Account {
-    private String tel;
-    private Adress adress;
 
-    private Cart cart;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
+import org.springframework.security.core.parameters.P;
+
+public class Client extends Account {
+    @Pattern(regexp = "^[+]?[()/0-9. -]{9,}$")
+    private String tel;
+    @Valid
+    private Adress adress;
 
     public Client() {
     }

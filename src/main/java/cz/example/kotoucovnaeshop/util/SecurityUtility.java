@@ -1,4 +1,4 @@
-package cz.example.kotoucovnaeshop.utility;
+package cz.example.kotoucovnaeshop.util;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

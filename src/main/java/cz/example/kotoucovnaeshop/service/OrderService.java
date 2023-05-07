@@ -15,25 +15,18 @@ public class OrderService {
     @Autowired
     private OrderRepositoryImpl orderRepository;
     @Autowired
-    private UserService userService;
+    private CustomerService customerService;
     @Autowired
     private AdressService adressService;
     @Autowired
     private TypesAndStatesService typesAndStatesService;
+    @Autowired ShoppingCartService shoppingCartService;
 
     @Autowired AdminService adminService;
     public void saveOrder(Order order) {
-        if (order.getClient().getId() == null) {
-            order.getClient().setId(userService.saveUser(order.getClient()));
-        }
-        Long billingAdressId = null;
-        if (order.getBillingAdress() != null) {
-            billingAdressId = adressService.saveAdress(order.getBillingAdress());
-        }
-        order.getBillingAdress().setId(billingAdressId);
         order.setOrderDate(LocalDateTime.now());
-        order.setOrderState(typesAndStatesService.getOrderState(1));
         orderRepository.saveOrder(order);
+        shoppingCartService.clearCart();
     }
 
     public List<Order> getAllOrders() {
@@ -56,12 +49,33 @@ public class OrderService {
     public List<Order> getOrdersByClient(Client client) {
         return orderRepository.getOrdersByClient(client);
     }
-    public List<Order> getUnconfirmedOrders() {
-        return orderRepository.getUnconfirmedOrders();
+
+    public List<Order> getOrdersByState(OrderState orderState)  {
+        return orderRepository.getOrdersByState(orderState);
     }
 
     public void updateShippingDate(Order order, LocalDate shippingDate) {
         orderRepository.updateShippingDate(order, shippingDate);
+    }
+
+    public long getNumberOfUnconfirmedOrders() {
+        return orderRepository.getNumberOfUncofirmedOrders();
+    }
+
+    public long getNumberOfReadyToShipOrders() {
+        return orderRepository.getNumberOfReadyToShipOrders();
+    }
+
+    public long getNumberShippedOrders() {
+        return orderRepository.getNumberShippedOrders();
+    }
+
+    public long getNumberOfDeliveredOrders() {
+        return orderRepository.getNumberOfDelivedOrders();
+    }
+
+    public long getNumberOfOrders() {
+        return orderRepository.getNumberOfOrders();
     }
 }
 

@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Kotoučovna eshop - administration</title>
-</head>
+<head th:replace="~{admin/common/common :: head (Dashboard)}"></head>
 <body>
-<a th:href="@{/admin/products}">Produkty</a>
-<a th:href="@{/admin/orders}">Objednávky</a>
+<header th:replace="~{/admin/common/common :: header}"></header>
+<h1>Vítejte v Administraci</h1>
 
 </body>
 </html>

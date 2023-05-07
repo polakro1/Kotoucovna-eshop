@@ -1,39 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/header :: head (title = 'Registrace')}"/>
 <body>
-<form th:action="@{/registration}" method="post">
+<header th:replace="~{common/header :: header}"/>
+<h2>Osobní údaje</h2>
+<form th:action="@{/registration}" method="post" class="zmena-udaju">
   <div th:object="${client}">
-    <h2>Osobní údaje</h2>
     <label for="username">Přihlašovací jméno</label>
+    <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
     <input type="text" id="username" th:field="*{username}">
     <label for="password">Heslo</label>
+    <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     <input type="password" id="password" th:field="*{password}">
     <label for="email">Email</label>
-    <input type="email" id="email" th:field="*{email}">
-    <label for="name">Jméno</label>
-    <input type="text" id="name" th:field="*{name}">
-    <label for="surname">Příjmení</label>
-    <input type="text" id="surname" th:field="*{surname}">
+    <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    <input type="email" name="email" id="email" th:field="*{email}">
+    <div>
+      <div>
+        <label for="name">Jméno</label>
+        <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <input type="text" id="name" th:field="*{name}">
+      </div>
+      <div>
+        <label for="surname">Příjmení</label>
+        <div class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+        <input type="text" id="surname" th:field="*{surname}">
+      </div>
+    </div>
     <label for="tel">Telefon</label>
+    <span class="error" th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"></span>
     <input type="tel" id="tel" th:field="*{tel}">
   </div>
   <div th:object="${adress}">
-    <label for="street">Ulice</label>
-    <input type="text" id="street" th:field="*{street}">
-    <label for="buildingNumber">Číslo popisné</label>
-    <input type="text" id="buildingNumber" th:field="*{buildingNumber}">
-    <label for="city">Město</label>
-    <input type="text" id="city" th:field="*{city}">
-    <label for="postalCode">Poštovní směrovací číslo</label>
-    <input type="tel" id="postalCode" th:field="*{postalCode}">
+    <h3>Adresa</h3>
+    <label for="ulice">Ulice</label>
+    <span class="error" th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></span>
+    <input type="text" name="ulice" id="ulice" th:field="*{street}">
+    <div>
+      <div>
+        <label for="cislo-popisne">Číslo popisné</label>
+        <div class="error" th:if="${#fields.hasErrors('buildingNumber')}" th:errors="*{buildingNumber}"></div>
+        <input type="text" name="cislo-popisne" id="cislo-popisne" th:field="*{buildingNumber}">
+      </div>
+      <div>
+        <label for="psc">Psč</label>
+        <div class="error" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></div>
+        <input type="text" name="psc" id="psc" th:field="*{postalCode}">
+      </div>
+    </div>
+    <label for="mesto">Město</label>
+    <span class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
+    <input type="text" name="mesto" id="mesto" th:field="*{city}">
     <label for="country">Země</label>
-    <input type="tel" id="country" th:field="*{country}">
+    <span class="error" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></span>
+    <input type="text" id="country" th:field="*{country}">
   </div>
-  <input type="submit">
+  <button class="potvrdit-btn" type="submit">Registrovat</button>
 </form>
+<footer th:replace="~{common/header :: footer}"></footer>
 </body>
 </html>

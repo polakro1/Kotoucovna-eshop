@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:fragment="head (title)">
+    <meta charset="UTF-8">
+    <title th:text="${title == null ? 'Kotoučovna - eshop | Administrace': title + ' | Kotoučovna - eshop | Administrace'}"></title>
+    <link href="/css/style3.css" rel="stylesheet" type="text/css">
+    <link href="/css/adminStyle.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/icons/favicon.svg" sizes="any" type="image/svg+xml">
+</head>
+<body>
+<header th:fragment="header">
+    <div id="header-left">
+        <a href="/admin/dashboard">
+            <image src="/images/Logo.svg" alt="Kotoučovna eshop logo"></image>
+        </a>
+    </div>
+    <div id="header-center">
+        <nav>
+            <ul>
+                <li>
+                    <a href="/admin/products">Produkty</a>
+                </li>
+                <li>
+                    <a href="/admin/orders">Objednávky</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div id="header-right">
+                <p sec:authentication="principal.username"></p>
+                <a th:href="@{/logout}"> | Odhlásit</a>
+    </div>
+
+</header>
+
+</body>
+</html>

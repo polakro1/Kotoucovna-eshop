@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{common/header.html :: head}"/>
+<head th:replace="~{common/header.html :: head (title = 'Přihlášení')}"/>
 <body>
 <header th:replace="~{common/header.html :: header}"/>
 <h1>Přihlášení</h1>
 <div class="login">
-    <form action="login" th:action="@{/login-user}" method="post">
+    <form action="login" th:action="@{/login}" method="post">
         <label for="username">Přihlašovací jméno</label>
         <input type="text" id="username" name="username">
         <label for="password">Heslo</label>
         <input type="password" id="password" name="password">
-        <input type="submit" value="Přihlásit">
+        <div th:if="${param.error}" class="error">Špatné přihlašovací jméno nebo heslo</div>
+        <button class="potvrdit-btn" type="submit">Přihlásit</button>
     </form>
     <div>
-        <a href="forgot-password.html">Zapomenuté heslo</a>
+        <a th:href="@{/password-reset}">Zapomenuté heslo</a>
         <a th:href="@{/registration}">Registrace</a>
     </div>
 </div>

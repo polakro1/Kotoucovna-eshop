@@ -1,37 +1,72 @@
 <!DOCTYPE html>
 <html lang="cs" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{common/header :: head}"/>
-    <body>
-        <header th:replace="~{common/header :: header}"/>
-        <div class="kategorie">
-            <h1 th:text="${category.name}"></h1>
-            <div class="podkategorie">
-                <a th:each="subcategory : ${subcategories}"
-                   th:href="@{/{categoryPath}/produkty(categoryPath=${#strings.toLowerCase(subcategory.name)})}">
-                    <h3 th:text="${subcategory.name}">Proteiny</h3>
-                </a>
+<head th:replace="~{common/header :: head (title = ${category.name})}"/>
+<body>
+<header th:replace="~{common/header :: header}"/>
+<main>
+    <div class="kategorie">
+        <h1 th:text="${category.name}"></h1>
+        <div class="podkategorie">
+            <a th:each="subcategory : ${subcategories}"
+               th:href="@{/{categoryPath}/produkty(categoryPath=${@diacriticHandler.makeURL(subcategory.name)})}">
+                <h3 th:text="${subcategory.name}">Proteiny</h3>
+            </a>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <form th:action="@{/{categoryPath}/produkty(categoryPath=${#strings.toLowerCase(category.name)})}"
+              class="seradit-dle">
+            <button type="submit" name="sortBy"
+                    th:classappend="${sortBy.equals(@productRepository.NAME_ASC)} ? 'active' : ''"
+                    th:value="${@productRepository.NAME_ASC}">A-Z
+            </button>
+            <button type="submit" name="sortBy"
+                    th:classappend="${sortBy.equals(@productRepository.NAME_DESC)} ? 'active' : ''"
+                    th:value="${@productRepository.NAME_DESC}">Z-A
+            </button>
+            <button type="submit" name="sortBy"
+                    th:classappend="${sortBy.equals(@productRepository.PRICE_ASC)} ? 'active' : ''"
+                    th:value="${@productRepository.PRICE_ASC}">Cena ↑
+            </button>
+            <button type="submit" name="sortBy"
+                    th:classappend="${sortBy.equals(@productRepository.PRICE_DESC)} ? 'active' : ''"
+                    th:value="${@productRepository.PRICE_DESC}">Cena ↓
+            </button>
+        </form>
+    </div>
+    <div class="items">
+        <div class="item" th:each="product : ${products}">
+            <div class="img-wrapper">
+                <img th:src=" ${product.image.path}">
             </div>
-        </div>
-        <div class="hr">
-            <hr>
-        </div>
-        <div class="items">
-            <div class="item" th:each="product : ${products}">
-                <img th:src=" ${product.imageUrl}">
-                <h4 th:text="${product.getName()}">Název</h4>
-                <p th:text="${product.getDescriptionShort}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis.</p>
-                <p class="cena" th:text="${product.price + ' Kč'}">499 Kč</p>
-                <div class="item-actions">
-                    <p class="skladem">Skladem</p>
-                    <div>
-                        <a th:href="@{/{categoryPath}/produkt/{produktId}(categoryPath=${#strings.toLowerCase(product.category.name)}, produktId = ${product.id})}" class="detail">Detail</a>
-                        <form th:action="@{/cart/add}" method="post">
-                            <button type="submit" name="productid" th:value="${product.id}" class="do-kosiku-btn">Do košíku</button>
-                        </form>
-                    </div>
+            <h4 th:text="${product.getName()}">Název</h4>
+            <p th:text="${product.getDescriptionShort}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+                vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora
+                torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum
+                lobortis.</p>
+            <p class="cena" th:text="${#numbers.formatDecimal(product.price, 0, 0) + ' Kč'}">499 Kč</p>
+            <div class="item-actions">
+                <p th:if="${product.quantity > 0}" class="skladem">Skladem</p>
+                <p th:if="${product.quantity < 1}" class="neni-skladem">Není skladem</p>
+                <div>
+                    <a th:href="@{/{categoryPath}/produkt/{produktName}(categoryPath=${@diacriticHandler.makeURL(product.category.name)},
+                    produktName = ${@diacriticHandler.makeURL(product.name)})}"
+                       class="detail">Detail</a>
+                    <form th:action="@{/cart/add}" method="post">
+                        <button th:unless="${@shoppingCartService.isInCart(product)}" type="submit" name="productid"
+                                th:value="${product.id}" class="do-kosiku-btn" th:disabled="${product.quantity < 1}">Do
+                            košíku
+                        </button>
+                        <button th:if="${@shoppingCartService.isInCart(product)}" class="do-kosiku-btn" disabled>V
+                            košíku
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-    <footer th:replace="~{common/header.html :: footer}"/>
-    </body>
+    </div>
+</main>
+<footer th:replace="~{common/header.html :: footer}"/>
+</body>
 </html>

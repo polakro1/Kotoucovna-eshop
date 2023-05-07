@@ -1,5 +1,7 @@
 package cz.example.kotoucovnaeshop.repository.impl;
 
+import cz.example.kotoucovnaeshop.model.Image;
+import cz.example.kotoucovnaeshop.model.Product;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,5 +18,15 @@ public class ImageRepositoryImpl {
         Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, image.getOriginalFilename());
         Files.write(fileNameAndPath, image.getBytes());
         return "/images/products/" + image.getOriginalFilename();
+    }
+
+    public void delete(Image image) throws IOException {
+        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, image.getName() + "." + image.getExtension());
+        Files.deleteIfExists(fileNameAndPath);
+    }
+
+    public String change(MultipartFile newImage, Image oldImage) throws IOException {
+        delete(oldImage);
+        return upload(newImage);
     }
 }

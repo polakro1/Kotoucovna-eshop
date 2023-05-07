@@ -1,14 +1,14 @@
 package cz.example.kotoucovnaeshop.repository.impl;
 
 import cz.example.kotoucovnaeshop.model.Employee;
-import cz.example.kotoucovnaeshop.utility.SecurityUtility;
+import cz.example.kotoucovnaeshop.util.SecurityUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AdminRepositoryImpl {
+public class AdminRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     private final RowMapper<Employee> employeeRowMapper = ((rs, rowNum) -> {

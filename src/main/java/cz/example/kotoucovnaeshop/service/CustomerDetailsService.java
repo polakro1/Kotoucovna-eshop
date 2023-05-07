@@ -2,7 +2,7 @@ package cz.example.kotoucovnaeshop.service;
 
 
 import cz.example.kotoucovnaeshop.model.Client;
-import cz.example.kotoucovnaeshop.repository.impl.UserRepositoryImpl;
+import cz.example.kotoucovnaeshop.repository.impl.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,16 +10,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class CustomerDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     @Autowired
-    private UserRepositoryImpl userRepository;
+    private CustomerRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

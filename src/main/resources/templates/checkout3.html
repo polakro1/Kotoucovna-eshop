@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/header :: head ('Objednávka - Potvrzení')}"/>
+<body>
+<header th:replace="~{common/header :: header}"/>
+<main>
+    <h1>Potvrzení objednávky</h1>
+    <div class="kosik-kroky">
+        <div>Platba a doprava</div>
+        <div>Dodací údaje</div>
+        <div id="aktivni-krok">Shrnutí a platba</div>
+    </div>
+    <hr>
+    <div class="potvrzeni-objendavky">
+        <div th:object="${session.order.adressee}">
+            <h3>Osobní údaje</h3>
+            <p th:text="*{email}"></p>
+            <p th:text="*{name + ' ' + surname}">R</p>
+            <p th:text="*{tel}"></p>
+        </div>
+        <div th:object="${session.order.shippingAdress}">
+            <h3>Dodací adresa</h3>
+            <p th:text="*{street + ' ' + buildingNumber}"></p>
+            <p th:text="*{postalCode + ' ' + city}"></p>
+            <p th:text="*{country}"></p>
+        </div>
+        <div th:object="${session.order.billingAdress}">
+            <h3>Fakturační adresa</h3>
+            <p th:text="*{street + ' ' + buildingNumber}"></p>
+            <p th:text="*{postalCode + ' ' + city}"></p>
+            <p th:text="*{country}"></p>
+        </div>
+    </div>
+    <div class="objednavka-polozky">
+        <div th:object="${session.order}">
+            <h3>Položky</h3>
+            <div class="list-legend">
+                <p>Název položky</p>
+                <p>Množství</p>
+                <p>Cena</p>
+            </div>
+            <div th:each="orderItem : *{orderItems}">
+                <p th:text="${orderItem.product.name}">Název položky</p>
+                <p class="mnozstvi" th:text="${orderItem.quantity + ' ks'}">1 ks</p>
+                <p class="cena" th:text="${#numbers.formatDecimal(orderItem.price, 0, 0) + ' Kč'}">250 Kč</p>
+            </div>
+        </div>
+        <hr>
+        <div th:object="${session.order}">
+            <div class="space-between">
+                <p th:text="*{shippingType.name}"></p>
+                <p th:text="*{shippingType.price + ' Kč'}"></p>
+            </div>
+            <div class="space-between">
+                <p th:text="*{paymentType.name}"></p>
+                <p th:text="*{paymentType.price + ' Kč'}"></p>
+            </div>
+            <div class="cena-celkem">
+                <p>Cena celkem: </p>
+                <p th:text="*{#numbers.formatDecimal(getSumPrice(), 0, 0) + ' Kč'}"></p>
+            </div>
+        </div>
+
+        <form class="potvrdit-btn-fix" th:action="@{/cart/create-order}" method="get">
+            <button class="potvrdit-btn" type="submit">Potvrdit a odeslat</button>
+        </form>
+    </div>
+</main>
+<footer th:replace="~{common/header :: footer}"></footer>
+</body>
+</html>

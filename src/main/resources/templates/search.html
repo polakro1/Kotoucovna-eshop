@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="cs" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/header :: head"/>
+<head th:replace="~{common/header.html :: head (title = 'Vyhledávání: ' + ${searchValue})}"/>
 <body>
-<header th:replace="common/header :: header"/>
+<header th:replace="~{common/header.html :: header}"/>
 <h1 th:text="'Výsledek vyhledávání: ' + ${searchValue}"></h1>
 <div class="hr">
   <hr>
 </div>
+<div>
+  <form th:action=" @{/search}">
+    <input type="hidden" name="search" th:value="${searchValue}">
+    <button type="submit" name="sortBy" th:value="${@productRepository.NAME_ASC}">A-Z</button>
+    <button type="submit" name="sortBy" th:value="${@productRepository.NAME_DESC}">Z-A</button>
+    <button type="submit" name="sortBy" th:value="${@productRepository.PRICE_ASC}">Cena ↑</button>
+    <button type="submit" name="sortBy" th:value="${@productRepository.PRICE_DESC}">Cena ↓</button>
+  </form>
+</div>
 <div class="items">
   <div class="item" th:each="product : ${products}">
-    <img th:src=" ${product.imageUrl}">
+    <img th:src=" ${product.image.path}">
     <h4 th:text="${product.getName()}">Název</h4>
     <p th:text="${product.getDescriptionShort}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis.</p>
     <p class="cena" th:text="${product.price}">499 Kč</p>
@@ -18,11 +27,15 @@
       <div>
         <a class="detail">Detail</a>
         <form th:action="@{/cart/add}" method="post">
-          <button type="submit" name="productid" th:value="${product.id}">Do košíku</button>
+          <button th:unless="${@shoppingCartService.isInCart(product)}" type="submit" name="productid" th:value="${product.id}" class="do-kosiku-btn" th:disabled="${product.quantity < 1}">Do košíku</button>
+          <button th:if="${@shoppingCartService.isInCart(product)}" class="do-kosiku-btn" disabled>V košíku</button>
         </form>
       </div>
     </div>
   </div>
+</div>
+<div th:if="${products.isEmpty()}">
+  <p>Nic nenalezeno</p>
 </div>
 </body>
 </html>

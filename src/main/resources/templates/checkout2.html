@@ -1,76 +1,91 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{common/header :: head}"/>
+<head th:replace="~{common/header :: head ('Objednávka - Dodací údaje')}"/>
 <body>
 <header th:replace="~{common/header :: header}"/>
-<h1>Košík</h1>
+<h1>Objednávka</h1>
 <div class="kosik-kroky">
-    <a href="">Krok 1</a>
-    <a href="">Krok 2</a>
-    <a href="" id="aktivni-krok">Krok 3</a>
+    <div>Platba a doprava</div>
+    <div id="aktivni-krok">Dodací údaje</div>
+    <div>Shrnutí a platba</div>
 </div>
 <hr>
-<form th:action="@{/cart/checkout2}" method="post" class="zmena-udaju">
-    <div th:object="${client}">
+<form th:action="@{/cart/checkout2}" method="post" class="zmena-udaju" th:object="${order}">
+    <div th:object="${order.adressee}">
         <h2>Osobní údaje</h2>
         <label for="email">Email</label>
+        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
         <input type="email" id="email" th:field="*{email}">
         <div>
             <div>
                 <label for="name">Jméno</label>
+                <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                 <input type="text" id="name" th:field="*{name}">
             </div>
             <div>
                 <label for="surname">Příjmení</label>
+                <div class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
                 <input type="text" id="surname" th:field="*{surname}">
             </div>
         </div>
         <label for="tel">Telefon</label>
+        <span class="error" th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"></span>
         <input type="tel" id="tel" th:field="*{tel}">
     </div>
-    <div th:object="${shippingAdress}">
+    <div>
         <h3>Dodací adresa</h3>
         <label for="SAstreet">Ulice</label>
-        <input type="text" id="SAstreet" th:field="*{street}">
+        <span class="error" th:if="${#fields.hasErrors('shippingAdress.street')}" th:errors="*{shippingAdress.street}"></span>
+        <input type="text" id="SAstreet" th:field="*{shippingAdress.street}">
         <div>
             <div>
                 <label for="SAbuildingNumber">Číslo popisné</label>
-                <input type="text" id="SAbuildingNumber" th:field="*{buildingNumber}">
+                <div class="error" th:if="${#fields.hasErrors('shippingAdress.buildingNumber')}" th:errors="*{shippingAdress.buildingNumber}"></div>
+                <input type="text" id="SAbuildingNumber" th:field="*{shippingAdress.buildingNumber}">
             </div>
             <div>
                 <label for="SApostalCode">Poštovní směrovací číslo</label>
-                <input type="tel" id="SApostalCode" pattern="[0-9]{5}" th:field="*{postalCode}">
+                <div class="error" th:if="${#fields.hasErrors('shippingAdress.postalCode')}" th:errors="*{shippingAdress.postalCode}"></div>
+                <input type="text" name="SApostalCode" id="SApostalCode" th:field="*{shippingAdress.postalCode}">
             </div>
         </div>
         <label for="SAcity">Město</label>
-        <input type="text" id="SAcity" th:field="*{city}">
+        <span class="error" th:if="${#fields.hasErrors('shippingAdress.city')}" th:errors="*{shippingAdress.city}"></span>
+        <input type="text" id="SAcity" th:field="*{shippingAdress.city}">
         <label for="SAcountry">Země</label>
-        <input type="tel" id="SAcountry" th:field="${shippingAdress.country}">
+        <span class="error" th:if="${#fields.hasErrors('shippingAdress.country')}" th:errors="*{shippingAdress.country}"></span>
+        <input type="text" id="SAcountry" th:field="*{shippingAdress.country}">
     </div>
     <hr>
     <label for="adresessAreSame">Adresa fakturace stejná jako dodací</label>
     <input type="checkbox" name="adressesAreSame" id="adresessAreSame">
-    <div th:object="${billingAdress}" id="adresa-fakturace">
+    <div id="adresa-fakturace">
         <h3>Adresa fakturace</h3>
         <label for="BAstreet">Ulice</label>
-        <input type="text" id="BAstreet" th:value="*{street}">
+        <span class="error" th:if="${#fields.hasErrors('billingAdress.street')}" th:errors="*{billingAdress.street}"></span>
+        <input type="text" id="BAstreet" th:field="*{billingAdress.street}">
         <div>
             <div>
                 <label for="BAbuildingNumber">Číslo popisné</label>
-                <input type="text" id="BAbuildingNumber" th:field="*{buildingNumber}">
+                <div class="error" th:if="${#fields.hasErrors('billingAdress.buildingNumber')}" th:errors="*{billingAdress.buildingNumber}"></div>
+                <input type="text" id="BAbuildingNumber" th:field="*{billingAdress.buildingNumber}">
             </div>
             <div>
                 <label for="BApostalCode">Poštovní směrovací číslo</label>
-                <input type="tel" id="BApostalCode" pattern="[0-9]{5}" th:field="*{postalCode}">
+                <div class="error" th:if="${#fields.hasErrors('billingAdress.postalCode')}" th:errors="*{billingAdress.postalCode}"></div>
+                <input type="text" name="BApostalCode" id="BApostalCode" th:field="*{billingAdress.postalCode}">
             </div>
         </div>
         <label for="BAcity">Město</label>
-        <input type="text" id="BAcity" th:value="*{city}">
+        <span class="error" th:if="${#fields.hasErrors('billingAdress.city')}" th:errors="*{billingAdress.city}"></span>
+        <input type="text" id="BAcity" th:field="*{billingAdress.city}">
         <label for="BAcountry">Země</label>
-        <input type="tel" id="BAcountry" th:value="${billingAdress.country}">
-        <hr>
+        <span class="error" th:if="${#fields.hasErrors('billingAdress.country')}" th:errors="*{billingAdress.country}"></span>
+        <input type="text" id="BAcountry" th:field="*{billingAdress.country}">
     </div>
-    <button type="submit">Odeslat objednávku</button>
+    <hr>
+
+    <button class="potvrdit-btn" type="submit">Pokračovat v objednávce</button>
 </form>
 <footer th:replace="~{common/header :: footer}"/>
 </body>

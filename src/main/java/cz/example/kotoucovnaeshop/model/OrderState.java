@@ -2,21 +2,25 @@ package cz.example.kotoucovnaeshop.model;
 
 public class OrderState {
     private long id;
-    private String nazev;
+    private String Name;
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public OrderState setId(long id) {
         this.id = id;
+
+        return this;
     }
 
-    public String getNazev() {
-        return nazev;
+    public String getName() {
+        return Name;
     }
 
-    public void setNazev(String nazev) {
-        this.nazev = nazev;
+    public OrderState setName(String name) {
+        this.Name = name;
+
+        return this;
     }
 }

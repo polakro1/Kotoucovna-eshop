@@ -1,5 +1,6 @@
 package cz.example.kotoucovnaeshop.model;
 
+import jakarta.validation.Valid;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
+    @Valid
     private List<CartItem> items;
 
     public Cart() {
@@ -31,7 +33,7 @@ public class Cart {
         if (items.size() > 0) {
             for (CartItem item:
                     items) {
-                sumPrice += item.getProduct().getPrice();
+                sumPrice += item.getProduct().getPrice() * item.getQuantity();
             }
         }
         return sumPrice;

@@ -1,7 +1,7 @@
 package cz.example.kotoucovnaeshop.service;
 
 import cz.example.kotoucovnaeshop.model.Category;
-import cz.example.kotoucovnaeshop.repository.CategoryRepository;
+import cz.example.kotoucovnaeshop.repository.impl.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,11 @@ public class CategoryService {
     }
     public Category getCategory(String name) {
         return categoryRepository.getByName(name);
+    }
+
+    public Category getCategoryByUrl(String url) {
+        url = url.replaceAll("-", " ");
+        return categoryRepository.getByName(url);
     }
     public List<Category> getAllCategories() {
         return categoryRepository.getAllCategories();

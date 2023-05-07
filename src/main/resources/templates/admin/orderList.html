@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="/css/adminStyle.css" rel="stylesheet" type="text/css">
-</head>
+<head th:replace="~{/admin/common/common :: head ('Objednávky')}"></head>
 <body>
-<h1>Objednávky</h1>
-<a th:href="@{/admin/orders/unconfirmed}">Nepotvrzené</a>
-<div class="order-list">
-    <div>
-        <p>Číslo objednávky</p>
-        <p>Datum objednání</p>
-        <p>Typ dopravy</p>
-        <p>Typ platby</p>
-        <p>Stav objednávky</p>
-        <p>Celková cena</p>
+<header th:replace="~{/admin/common/common :: header}"></header>
+<main>
+    <h1>Objednávky</h1>
+    <div class="tools order-list-filters">
+        <a th:href="@{/admin/orders/all}" th:classappend="${orderFilter.equals('all') ? 'active' : ''}"
+           th:text="${'Vše (' + @orderService.getNumberOfOrders() + ')'}"></a>
+        <a th:href="@{/admin/orders/unconfirmed}" th:classappend="${orderFilter.equals('unconfirmed') ? 'active' : ''}"
+           th:text="${'K potvrzení (' + @orderService.getNumberOfUnconfirmedOrders() + ')'}"></a>
+        <a th:href="@{/admin/orders/to-ship}" th:classappend="${orderFilter.equals('to-ship') ? 'active' : ''}"
+           th:text="${'K odeslání (' + @orderService.getNumberOfReadyToShipOrders() + ')'}"></a>
+        <a th:href="@{/admin/orders/shipped}" th:classappend="${orderFilter.equals('shipped') ? 'active' : ''}"
+           th:text="${'Odeslané (' + @orderService.getNumberShippedOrders() + ')'}"></a>
+        <a th:href="@{/admin/orders/delivered}" th:classappend="${orderFilter.equals('delivered') ? 'active' : ''}"
+           th:text="${'Doručené (' + @orderService.getNumberOfDeliveredOrders() + ')'}"></a>
     </div>
-    <div th:each="order : ${orders}">
-        <p th:text="${order.id}"></p>
-        <p th:text="${order.orderDate}"></p>
-        <p th:text="${order.shippingType.name}"></p>
-        <p th:text="${order.paymentType.name}"></p>
-        <p th:text="${order.orderState.nazev}"></p>
-        <p th:text="${order.getSumPrice() + ' Kč'}"></p>
-        <a th:href="@{/admin/order(order=${order.id})}">Detail</a>
+    <div class="order-list">
+        <div class="list-legend">
+            <p>Číslo objednávky</p>
+            <p>Datum objednání</p>
+            <p>Typ dopravy</p>
+            <p>Typ platby</p>
+            <p>Stav objednávky</p>
+            <p class="cena">Celková cena</p>
+        </div>
+        <div th:each="order : ${orders}">
+            <p th:text="${order.id}"></p>
+            <p th:text="${#temporals.format(order.orderDate, 'dd.MM.yyyy HH:mm')}"></p>
+            <p th:text="${order.shippingType.name}"></p>
+            <p th:text="${order.paymentType.name}"></p>
+            <p th:text="${order.orderState.name}"></p>
+            <p class="cena" th:text="${#numbers.formatDecimal(order.getSumPrice(), 0, 0) + ' Kč'}"></p>
+            <a th:href="@{/admin/order(order=${order.id})}">Detail</a>
+        </div>
     </div>
-</div>
-
+</main>
 </body>
 </html>

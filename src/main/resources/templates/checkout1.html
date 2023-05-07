@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{common/header :: head}"/>
+<head th:replace="~{common/header :: head ('Objednávka - Způsoby platby')}"/>
 <body>
 <header th:replace="~{common/header :: header}" />
-<h1>Košík</h1>
+<h1>Objednávka</h1>
 <div class="kosik-kroky">
-    <a href="">Krok 1</a>
-    <a href="" id="aktivni-krok">Krok 2</a>
-    <a href="">Krok 3</a>
+    <div id="aktivni-krok" >Platba a doprava</div>
+    <div>Dodací údaje</div>
+    <div>Shrnutí a platba</div>
 </div>
 <hr>
 <form th:action="@{/cart/checkout1}" method="post" class="zpusoby-objednavky-form">
@@ -15,6 +15,7 @@
         <div>
             <h3>Způsoby platby</h3>
             <hr>
+            <span class="error" th:if="${paymentTypeIdEmpty}">Zadejte způsob platby</span>
             <div th:each="paymentType : ${paymentTypes}" class="zpusob-objednavky">
                 <label th:for="${paymentType.name}">
                     <p th:text="${paymentType.name}"></p>
@@ -24,8 +25,9 @@
             </div>
         </div>
         <div>
-            <h3>Způsob platby</h3>
+            <h3>Způsob dopravy</h3>
             <hr>
+            <span class="error" th:if="${shippingTypeIdEmpty}">Zadejte způsob dopravy</span>
             <div th:each="shippingType : ${shippingTypes}" class="zpusob-objednavky">
                 <label th:for="${shippingType.name}">
                     <p th:text="${shippingType.name}"></p>
@@ -35,7 +37,7 @@
             </div>
         </div>
     </div>
-    <button type="submit">Pokračovat v objednávce</button>
+    <button class="potvrdit-btn" type="submit">Pokračovat v objednávce</button>
 
 </form>
 <footer th:replace="~{common/header :: footer}"/>

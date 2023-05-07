@@ -1,7 +1,7 @@
 package cz.example.kotoucovnaeshop.service;
 
 import cz.example.kotoucovnaeshop.model.Employee;
-import cz.example.kotoucovnaeshop.repository.impl.AdminRepositoryImpl;
+import cz.example.kotoucovnaeshop.repository.impl.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class AdminDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    private AdminRepositoryImpl adminRepository;
+    private AdminRepository adminRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -5,6 +5,8 @@ import cz.example.kotoucovnaeshop.model.OrderState;
 import cz.example.kotoucovnaeshop.service.OrderService;
 import cz.example.kotoucovnaeshop.service.ShoppingCartService;
 import cz.example.kotoucovnaeshop.service.TypesAndStatesService;
+import cz.example.kotoucovnaeshop.util.DiacriticHandler;
+import cz.example.kotoucovnaeshop.util.OrderStates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,21 +24,33 @@ public class OrderController {
     private ShoppingCartService shoppingCartService;
     @Autowired
     private OrderService orderService;
+
     @GetMapping("admin/orders")
     public String manageOrders(Model model) {
-        List<Order> orders = orderService.getAllOrders();
-        model.addAttribute("orders", orders);
-
-        return "admin/orderList";
+        return "redirect:/admin/orders/all";
     }
 
     @GetMapping("admin/orders/{orderFilter}")
-    public String filterOrders(@PathVariable("orderFilter") String filter, Model model) {
+    public String listOrders(@PathVariable("orderFilter") String filter, Model model) {
         List<Order> orders = new ArrayList<>();
+
         switch (filter) {
             case "unconfirmed":
-                orders = orderService.getUnconfirmedOrders();
+                orders = orderService.getOrdersByState(OrderStates.UNCONFIRMED);
+                break;
+            case "all":
+                orders = orderService.getAllOrders();
+                break;
+            case "to-ship":
+                orders = orderService.getOrdersByState(OrderStates.READY_TO_SHIP);
+                break;
+            case "shipped":
+                orders = orderService.getOrdersByState(OrderStates.SHIPPED);
+                break;
+            case "delivered":
+                orders = orderService.getOrdersByState(OrderStates.DELIVERED);
         }
+        model.addAttribute(filter);
         model.addAttribute("orders", orders);
 
         return "admin/orderList";
@@ -45,7 +59,6 @@ public class OrderController {
     @GetMapping("/cart/create-order")
     public String createOrder(@SessionAttribute Order order) {
         orderService.saveOrder(order);
-        shoppingCartService.clearCart();
 
         return "redirect:/cart";
     }

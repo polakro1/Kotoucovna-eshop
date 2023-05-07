@@ -77,7 +77,7 @@ public class TypesAndStatesRepository {
                 (rs, rowNum) -> {
                     OrderState newOrderState = new OrderState();
                     newOrderState.setId(rs.getLong("stav_objednavkyid"));
-                    newOrderState.setNazev(rs.getString("nazev"));
+                    newOrderState.setName(rs.getString("nazev"));
 
                     return newOrderState;
                 }, id

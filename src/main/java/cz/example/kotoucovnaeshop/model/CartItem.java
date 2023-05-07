@@ -1,9 +1,12 @@
 package cz.example.kotoucovnaeshop.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Min;
+
 public class CartItem {
     private Product product;
+    @Min(1)
     private int quantity;
-
     private long id;
 
     public CartItem(){

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/admin/common/common :: head ('Přihlášení')}"></head>
 <body>
 <h1>Admin login</h1>
-<form th:action="@{/admin/login}" method="post">
-    <label for="username">Přihlašovací jméno</label>
-    <input type="text" id="username" name="username">
-    <label for="password">Heslo</label>
-    <input type="password" id="password" name="password">
-    <input type="submit" value="Přihlásit">
-</form>
+<div class="login">
+    <form action="login" th:action="@{/admin/login}" method="post">
+        <label for="username">Přihlašovací jméno</label>
+        <input type="text" id="username" name="username">
+        <label for="password">Heslo</label>
+        <input type="password" id="password" name="password">
+        <div th:if="${param.error}" class="error">Špatné přihlašovací jméno nebo heslo</div>
+        <button class="potvrdit-btn" type="submit">Přihlásit</button>
+    </form>
+</div>
 </body>
 </html>

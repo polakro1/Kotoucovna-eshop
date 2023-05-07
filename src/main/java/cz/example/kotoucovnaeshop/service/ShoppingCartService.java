@@ -19,24 +19,15 @@ public class ShoppingCartService {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
     @Autowired
-    private UserService userService;
+    private CustomerService customerService;
 
 
     public void addItem (Product product, int quantity) {
-        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-            Client client = userService.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER"))) {
+            Client client = customerService.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
             shoppingCartRepository.addItem(product, quantity, client);
         }
         cart.addItem(product, quantity);
-    }
-
-    public Cart getCartFromSession() {
-        Cart cart = (Cart) httpSession.getAttribute("cart");
-        if (cart == null) {
-            cart = new Cart();
-            httpSession.setAttribute("cart", cart);
-        }
-        return cart;
     }
 
     public List<OrderItem> getItemsAsOrderItems() {
@@ -57,15 +48,15 @@ public class ShoppingCartService {
     }
 
     public void clearCart() {
-        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-            Client client = userService.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER"))) {
+            Client client = customerService.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
             shoppingCartRepository.clear(client);
         }
 
         cart.getItems().clear();
     }
     public void deleteItem(int index) {
-        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER"))) {
             shoppingCartRepository.deleteItem(cart.getItems().get(index));
         }
         cart.getItems().remove(index);
@@ -73,5 +64,16 @@ public class ShoppingCartService {
 
     public void setCartByClient(Client client) {
         cart.setItems(shoppingCartRepository.getCartItems(client));
+    }
+
+    public boolean isInCart(Product product) {
+        return cart.getItems().stream().anyMatch(item -> item.getProduct().getId() == product.getId());
+    }
+
+    public void changeQuantity(CartItem cartItem, int newQuantity) {
+        cartItem.setQuantity(newQuantity);
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER"))) {
+            shoppingCartRepository.changeQuantity(cartItem, newQuantity);
+        }
     }
 }

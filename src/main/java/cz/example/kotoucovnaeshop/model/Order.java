@@ -1,5 +1,7 @@
 package cz.example.kotoucovnaeshop.model;
 
+import jakarta.validation.Valid;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -8,7 +10,9 @@ public class Order {
     private long id;
     private LocalDateTime orderDate;
     private LocalDate shippingDate;
+    @Valid
     private Adress shippingAdress;
+    @Valid
     private Adress billingAdress;
     private Client client;
     private Employee employee;
@@ -17,6 +21,8 @@ public class Order {
     private PaymentType paymentType;
     private ShippingType shippingType;
     private OrderState orderState;
+    @Valid
+    private Adressee adressee;
 
 
     public long getId() {
@@ -107,12 +113,24 @@ public class Order {
         this.orderState = orderState;
     }
 
+    public Adressee getAdressee() {
+        return adressee;
+    }
+
+    public void setAdressee(Adressee adressee) {
+        this.adressee = adressee;
+    }
+
     public double getSumPrice() {
         double sum = 0;
         for (OrderItem orderItem :
                 orderItems) {
-            sum += orderItem.getPrice();
+            sum += orderItem.getPrice() * orderItem.getQuantity();
         }
+
+        sum += paymentType.getPrice();
+        sum += shippingType.getPrice();
+
         return sum;
     }
 }

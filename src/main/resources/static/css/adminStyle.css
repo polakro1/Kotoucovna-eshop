@@ -1,35 +1,204 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 @font-face {
-    font-family: 'BroshK';
-    src: url(../fonts/broshk/BroshK_repaired.ttf) format('truetype');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
+    font-family: BroshK;
+    src: url(Fonts/broshk/BroshK.ttf);
+}
+main {
+    padding: 0 5%;
 }
 
+body {
+    font-family: "Open Sans";
+}
+
+/*#region HEADER*/
+
+#header-center {
+    justify-content: end;
+}
+
+#header-left img {
+    height: 4rem;
+    margin: 0;
+}
+
+#header-right {
+    flex-direction: row;
+    justify-content: end;
+    gap: 10px;
+}
+
+#header-right p {
+    font-family: BroshK;
+    margin: 0;
+    font-size: 1.8rem;
+}
+/*#endregion*/
+
+
+/*#region PRODUCT-LIST*/
 .product-list > div {
     display: grid;
-    grid-template-columns: 3fr 5fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 3fr 5fr 1fr 1fr 1.5fr 1fr;
     column-gap: 20px;
 }
 
+.product-list a {
+    background-color: rgb(173,173,173);
+    padding: 0.3rem;
+}
+
+.tools {
+    margin-top: 20px;
+    display: flex;
+    justify-content: end;
+}
+
+.tools a {
+    box-sizing: border-box;
+    font-family: BroshK;
+    width: fit-content;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    background-color: #FFAB2B;
+    height: 100%;
+    padding: 0.5rem 1rem;
+}
+/*#endregion*/
+
+/*#region ORDER-LIST*/
 .order-list > div {
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 0.8fr 0.3fr;
+    gap: 1rem;
 }
 
-.order-items > div {
-    display: grid;
-    grid-template-columns: 1fr 5fr 1fr 1fr;
+.order-list .list-legend .cena {
+    width: 100%;
 }
 
-.order-details-first {
+.order-list a {
+    background-color: rgb(173,173,173);
+    padding: 0.3rem;
+    margin: auto;
+}
+
+.order-list-filters a {
+    background-color: rgb(173,173,173);
+}
+.order-list-filters a.active {
+    background-color: #FFAB2B;
+}
+/*#endregion*/
+
+/*#region ORDER-DETAILS*/
+.objednavka-polozky-detail >div:first-of-type > div {
+    grid-template-columns: 1fr 8fr 1fr 1fr;
+}
+
+.order-detail > div:first-of-type {
     display: flex;
     justify-content: space-between;
 }
 
 .order-details-state {
     display: flex;
+    gap: 30px;
+}
+
+/*
+.potvrzeni-objendavky > div:first-of-type {
+    display: flex;
+    justify-content: space-between;
+}
+
+ */
+
+.potvrzeni-objendavky > div h3{
+    text-align: center;
+}
+
+.order-detail form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/*#endregion*/
+
+/*#region PRODUCT-FORM*/
+.product-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 15px;
 }
+
+.product-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.product-form .product-name-price-quantity {
+    display: flex;
+    gap: 5%;
+    width: 100%;
+}
+
+.product-form .product-name-price-quantity > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-form .product-name-price-quantity > div:first-of-type {
+    flex: 1;
+}
+
+.product-form input[name=quantity] {
+    width: 4rem;
+}
+
+.product-form input[name=price] {
+    width: 6rem;
+}
+
+.product-form input[name=name] {
+
+}
+
+.product-form textarea[name=description] {
+    height: 15rem;
+}
+
+
+.product-form select {
+    height: 1.9rem;
+}
+
+.product-img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.product-img form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.product-img img {
+    height: 30vh;
+}
+
+/*#endregion*/
