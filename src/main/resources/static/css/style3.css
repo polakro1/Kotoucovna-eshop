@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 @font-face {
     font-family: BroshK;
-    src: url(Fonts/broshk/BroshK.ttf);
+    src: url(/fonts/broshk/BroshK.ttf) format('truetype');
 }
 
 /*#region TEXT */
