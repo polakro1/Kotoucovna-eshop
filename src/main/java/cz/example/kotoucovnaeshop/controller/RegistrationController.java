@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class CustomerController {
+public class RegistrationController {
     @Autowired
     private CustomerDetailsService customerDetailsService;
     @Autowired
@@ -50,18 +50,18 @@ public class CustomerController {
 
         try {
             customerService.getByEmail(client.getEmail());
-            clientBindingResult.rejectValue("email", "error.client.email.exist","Email byl již použit.");
-        } catch (EmptyResultDataAccessException e) {}
+            clientBindingResult.rejectValue("email", "error.client.email.exist", "Email byl již použit.");
+        } catch (EmptyResultDataAccessException e) {
+        }
         try {
             customerService.getByUsername(client.getUsername());
             clientBindingResult.rejectValue("username", "error.client.username.exist", "Přihlašovací jméno již existuje.");
-        } catch (EmptyResultDataAccessException e) {}
+        } catch (EmptyResultDataAccessException e) {
+        }
 
         if (clientBindingResult.hasErrors() || adressBindingResult.hasErrors()) {
             return "registration";
         }
-
-        System.out.println(client.getPassword());
 
 
         customerService.createUser(client);

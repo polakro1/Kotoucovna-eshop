@@ -3,7 +3,55 @@
 <head th:replace="~{admin/common/common :: head (Dashboard)}"></head>
 <body>
 <header th:replace="~{/admin/common/common :: header}"></header>
-<h1>Vítejte v Administraci</h1>
+<main>
+    <h1>Vítejte v Administraci</h1>
+    <div class="dashboard">
+        <div>
+            <h2>Produkty</h2>
+            <div>
+                <div>
+                    <p>Celkově</p>
+                    <p th:text="${@productService.getNumberOfProducts()}"></p>
+                </div>
+                <div>
+                    <p>S nízským množstvím</p>
+                    <p th:text="${@productService.getNumberOfLowQuantityProducts()}"></p>
+                </div>
+                <div>
+                    <p>Není skladem</p>
+                    <p th:text="${@productService.getNumberOfOutOfStockProducts()}"></p>
+                </div>
+            </div>
+        </div>
+        <div class="orders">
+            <h2>Objednávky</h2>
+            <div>
+                <div>
+                    <p>Celkově objednávek:</p>
+                    <p th:text="${@orderService.getNumberOfOrders()}"></p>
+                </div>
+                <div>
+                    <p>Doručené:</p>
+                    <p th:text="${@orderService.getNumberOfDeliveredOrders()}"></p>
+                </div>
+                <div>
+                    <p>Odeslané:</p>
+                    <p th:text="${@orderService.getNumberShippedOrders()}"></p>
+                </div>
+                <div>
+                    <p>K odeslání:</p>
+                    <p th:text="${@orderService.getNumberOfReadyToShipOrders()}"></p>
+                </div>
+                <div>
+                    <p>K potvrzení:</p>
+                    <p th:text="${@orderService.getNumberOfUnconfirmedOrders()}"></p>
+                </div>
+            </div>
 
+        </div>
+    </div>
+</main>
+<div id="footer-spacer"></div>
+<footer th:replace="~{/admin/common/common :: footer}"></footer>
 </body>
 </html>

@@ -6,7 +6,9 @@ import cz.example.kotoucovnaeshop.service.ProductService;
 import cz.example.kotoucovnaeshop.service.TypesAndStatesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.jdbc.core.*;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
@@ -80,7 +82,7 @@ public class OrderRepositoryImpl {
                 order.setPaymentType(paymentType);
 
                 //ShippingType
-                ShippingType shippingType= new ShippingType();
+                ShippingType shippingType = new ShippingType();
                 shippingType.setId(rs.getLong("typ_dopravyid"));
                 shippingType.setName(rs.getString("td_nazev"));
                 shippingType.setPrice(rs.getInt("td_cena"));
@@ -219,7 +221,7 @@ public class OrderRepositoryImpl {
         order.setPaymentType(paymentType);
 
         //ShippingType
-        ShippingType shippingType= new ShippingType();
+        ShippingType shippingType = new ShippingType();
         shippingType.setId(rs.getLong("typ_dopravyid"));
         shippingType.setName(rs.getString("td_nazev"));
         shippingType.setPrice(rs.getInt("td_cena"));
@@ -346,6 +348,7 @@ public class OrderRepositoryImpl {
 
         return order;
     };
+
     public List<Order> getAllOrders() {
         List<Order> orders = jdbcTemplate.query(
                 "select * from vsechny_objednavky",
@@ -444,12 +447,13 @@ public class OrderRepositoryImpl {
             );
         }
     }
-/*
-    private void saveAdressee(Order order) {
-        jdbcTemplate.update("update adresati")
-    }
 
- */
+    /*
+        private void saveAdressee(Order order) {
+            jdbcTemplate.update("update adresati")
+        }
+
+     */
     private List<OrderItem> getOrderItems(Order order) {
         List<OrderItem> orderItems = jdbcTemplate.query(
                 "select polozky_objednavkyid, cena, mnozstvi, produktyId from polozky_objednavky " +

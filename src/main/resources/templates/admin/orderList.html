@@ -17,25 +17,33 @@
         <a th:href="@{/admin/orders/delivered}" th:classappend="${orderFilter.equals('delivered') ? 'active' : ''}"
            th:text="${'Doručené (' + @orderService.getNumberOfDeliveredOrders() + ')'}"></a>
     </div>
-    <div class="order-list">
-        <div class="list-legend">
-            <p>Číslo objednávky</p>
-            <p>Datum objednání</p>
-            <p>Typ dopravy</p>
-            <p>Typ platby</p>
-            <p>Stav objednávky</p>
-            <p class="cena">Celková cena</p>
-        </div>
-        <div th:each="order : ${orders}">
-            <p th:text="${order.id}"></p>
-            <p th:text="${#temporals.format(order.orderDate, 'dd.MM.yyyy HH:mm')}"></p>
-            <p th:text="${order.shippingType.name}"></p>
-            <p th:text="${order.paymentType.name}"></p>
-            <p th:text="${order.orderState.name}"></p>
-            <p class="cena" th:text="${#numbers.formatDecimal(order.getSumPrice(), 0, 0) + ' Kč'}"></p>
-            <a th:href="@{/admin/order(order=${order.id})}">Detail</a>
-        </div>
-    </div>
+    <table class="order-list" id="table">
+        <thead class="list-legend">
+        <tr>
+            <th onclick="sortTable(0)">Číslo objednávky</th>
+            <th onclick="sortTable(1)">Datum objednání</th>
+            <th onclick="sortTable(2)">Typ dopravy</th>
+            <th onclick="sortTable(3)">Typ platby</th>
+            <th onclick="sortTable(4)">Stav objednávky</th>
+            <th onclick="sortTable(5)">Celková cena</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${#temporals.format(order.orderDate, 'dd.MM.yyyy HH:mm')}"></td>
+            <td th:text="${order.shippingType.name}"></td>
+            <td th:text="${order.paymentType.name}"></td>
+            <td th:text="${order.orderState.name}"></td>
+            <td th:text="${#numbers.formatDecimal(order.getSumPrice(), 0, 0) + ' Kč'}"></td>
+            <td><a th:href="@{/admin/order(order=${order.id})}">Detail</a></td>
+        </tr>
+
+        </tbody>
+    </table>
 </main>
+<div id="footer-spacer"></div>
+<footer th:replace="~{/admin/common/common :: footer}"></footer>
 </body>
 </html>

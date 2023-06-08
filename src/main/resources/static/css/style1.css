@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 @font-face {
     font-family: BroshK;
     src: url(../fonts/broshk/BroshK.ttf);
@@ -9,23 +10,28 @@ header, nav, h1, h2, h3, h4 {
     font-family: BroshK;
     color: #000000;
 }
+
 header {
     font-size: 1.8rem;
 }
-h1, h2, h3, h4{
+
+h1, h2, h3, h4 {
     color: #FFAB2B;
     font-weight: normal;
     text-align: center;
 }
+
 h1 {
     font-size: 4.5rem;
     margin-bottom: 0;
     margin-top: 0.5rem;
 }
+
 h2 {
     font-size: 4rem;
     margin-bottom: 0;
 }
+
 h3 {
     font-size: 2rem;
 }
@@ -35,6 +41,7 @@ p {
     font-size: 1.125rem;
     color: #000000;
 }
+
 a {
     text-decoration: none;
     color: inherit;
@@ -59,17 +66,21 @@ header {
 header > div {
     flex: 1;
 }
+
 nav {
     text-align: center;
 }
+
 nav ul {
     padding: 0;
     margin: 0 0 5px 0;
 }
+
 nav ul li {
     display: inline-block;
     padding: 5px 5px 0 5px;
 }
+
 #header-center {
     display: flex;
     flex-direction: column;
@@ -114,7 +125,7 @@ nav ul li {
 
 #header-right {
     display: flex;
-    flex-direction: column;   
+    flex-direction: column;
     text-align: right;
 }
 
@@ -130,7 +141,7 @@ nav ul li {
     padding-right: 5px;
 }
 
-#header-left img{
+#header-left img {
     height: 100px;
     margin: 10px;
 }
@@ -181,7 +192,7 @@ nav ul li {
 
 .item-actions > p {
     margin: 0;
-    align-self: flex-end; 
+    align-self: flex-end;
 }
 
 .skladem {
@@ -237,7 +248,7 @@ nav ul li {
     column-gap: 30px;
     row-gap: 0.6rem;
 
-margin: auto;
+    margin: auto;
 }
 
 .podkategorie h3 {

@@ -1,7 +1,10 @@
 package cz.example.kotoucovnaeshop.model;
 
 import jakarta.validation.GroupSequence;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import jakarta.validation.groups.Default;
 
 import java.util.HashSet;
@@ -27,8 +30,7 @@ public abstract class Account {
 
     private Set<String> roles = new HashSet<>();
 
-    public Account() {
-    }
+    public Account() {}
 
     public Account(long id, String email, String password, String username, String name, String surname) {
         this.id = id;

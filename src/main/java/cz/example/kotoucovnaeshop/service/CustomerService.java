@@ -28,6 +28,7 @@ public class CustomerService {
     public Client getByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
     public Client getByEmail(String email) {
         return userRepository.getByEmail(email);
     }

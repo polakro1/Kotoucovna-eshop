@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 @font-face {
     font-family: BroshK;
     src: url(/fonts/broshk/BroshK.ttf) format('truetype');
@@ -11,23 +12,28 @@ header a, nav a, h1, h2, h3, h4 {
     font-family: BroshK;
     color: #000000;
 }
+
 header {
     font-size: 1.8rem;
 }
-h1, h2, h3, h4{
+
+h1, h2, h3, h4 {
     color: #FFAB2B;
     font-weight: normal;
     text-align: center;
 }
+
 h1 {
     font-size: 4.5rem;
     margin-bottom: 0;
 
 }
+
 h2 {
     font-size: 4rem;
     margin-bottom: 0;
 }
+
 h3 {
     font-size: 2rem;
 }
@@ -38,6 +44,7 @@ p {
     color: #000000;
 
 }
+
 a {
     text-decoration: none;
     color: inherit;
@@ -65,6 +72,7 @@ body {
 input {
     height: 1.5rem;
 }
+
 .error {
     color: red;
     font-size: small;
@@ -92,17 +100,21 @@ header {
 header > div {
     flex: 1;
 }
+
 nav {
     text-align: center;
 }
+
 nav ul {
     padding: 0;
     margin: 0 0 5px 0;
 }
+
 nav ul li {
     display: inline-block;
     padding: 5px 5px 0 5px;
 }
+
 #header-center {
     display: flex;
     flex-direction: column;
@@ -147,7 +159,7 @@ nav ul li {
 
 #header-right {
     display: flex;
-    flex-direction: column;   
+    flex-direction: column;
     text-align: right;
 }
 
@@ -163,7 +175,7 @@ nav ul li {
     padding-right: 5px;
 }
 
-#header-left img{
+#header-left img {
     height: 100px;
     margin: 10px;
 }
@@ -213,6 +225,7 @@ nav ul li {
 
     }
 }
+
 /*#endregion */
 
 /*#region ITEM-LIST */
@@ -252,7 +265,6 @@ nav ul li {
 }
 
 
-
 .item-actions {
     display: flex;
     justify-content: space-between;
@@ -260,12 +272,17 @@ nav ul li {
 
 .item-actions > p {
     margin: 0;
-    align-self: flex-end; 
+    align-self: flex-end;
 }
 
 .skladem {
     color: rgb(0, 184, 9);
     background-color: rgba(0, 255, 13, 0.075);
+}
+
+.neni-skladem {
+    color: #9e9e9e;
+    background-color: #e7e7e7;
 }
 
 .item > div > div {
@@ -381,7 +398,7 @@ nav ul li {
     font-size: 2.5rem;
 }
 
- /*#endregion */
+/*#endregion */
 
 /*#region LOGIN */
 .login {
@@ -416,17 +433,19 @@ nav ul li {
 /*#endregion */
 
 /*#region SPLASH-IMG */
-#splash-img > img{
+#splash-img > img {
     object-fit: cover;
     width: 100%;
     height: 30vw;
     min-height: 300px;
     clip-path: polygon(0 0, 0 100%, 100% 90%, 100% 0);
 }
+
 #splash-img {
     position: relative;
     text-align: center;
 }
+
 /*#endregion*/
 
 /*region VITEJTE */
@@ -434,13 +453,15 @@ nav ul li {
     text-align: center;
     padding-bottom: 50px;
 }
+
 .vitejte p {
-    padding:0 20%;
+    padding: 0 20%;
 }
 
 .vitejte h1 {
     margin-top: 0.5rem;
 }
+
 /*#endregion*/
 
 /*#region FOOTER */
@@ -483,20 +504,23 @@ footer {
     padding: 4% 0 0 0;
     clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 20%);
 }
-footer > div{
+
+footer > div {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     gap: 3rem;
 }
+
 footer > div > div {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    
+
 }
+
 .kontakt-ikony {
     width: 100%;
     display: flex;
@@ -508,11 +532,13 @@ footer h3, footer p {
     margin: 0;
     color: white;
 }
+
 #oteviraci-doba-grid {
     display: grid;
     grid-template-columns: auto auto;
     column-gap: 1rem;
 }
+
 .odkazy {
     display: flex;
     gap: 1rem;
@@ -521,6 +547,7 @@ footer h3, footer p {
     align-items: center;
     justify-content: center;
 }
+
 .odkazy a {
     gap: 1rem;
     align-items: center;
@@ -546,7 +573,6 @@ footer nav a {
 }
 
 #footer-fix {
-    position: relative;
     bottom: 0;
     width: 100%;
 }
@@ -720,13 +746,13 @@ footer nav a {
     margin: 0 33px 0 10%;
 }
 
-.objednavka-polozky >div:first-of-type > div,
+.objednavka-polozky > div:first-of-type > div,
 .objednavka-polozky a {
     display: grid;
     grid-template-columns: 5fr 1fr 1fr;
 }
 
-.objednavka-polozky > div:last-of-type >div {
+.objednavka-polozky > div:last-of-type > div {
     display: flex;
     justify-content: space-between;
 }
@@ -809,6 +835,7 @@ footer nav a {
 .zpusob-objednavky label {
     text-align: start;
 }
+
 /*#endregion */
 
 /*region OBJEDNAVKA-UDAJE */
@@ -849,13 +876,14 @@ main {
     align-items: center;
 }
 
-.potvrzeni-objendavky > div{
-    width: 100%;
+.potvrzeni-objendavky > div {
+    width: fit-content;
 }
 
 .potvrzeni-objendavky > div > h3 {
     text-align: start;
 }
+
 /*#endregion*/
 
 .potvrdit-btn {
@@ -882,3 +910,22 @@ main {
 .active {
     background-color: #FFAB2B;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#footer-spacer {
+    flex: 1;
+}
+
+.msg-order-created {
+    width: fit-content;
+    margin: 1rem auto;
+    background-color: rgb(128, 255, 131);
+    padding: 0.1rem 2rem;
+}
+
+

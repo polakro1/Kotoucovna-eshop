@@ -2,7 +2,6 @@ package cz.example.kotoucovnaeshop.service;
 
 import cz.example.kotoucovnaeshop.model.*;
 import cz.example.kotoucovnaeshop.repository.impl.ShoppingCartRepository;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -13,8 +12,6 @@ import java.util.List;
 @Service
 public class ShoppingCartService {
     @Autowired
-    private HttpSession httpSession;
-    @Autowired
     private Cart cart;
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
@@ -22,7 +19,7 @@ public class ShoppingCartService {
     private CustomerService customerService;
 
 
-    public void addItem (Product product, int quantity) {
+    public void addItem(Product product, int quantity) {
         if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER"))) {
             Client client = customerService.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
             shoppingCartRepository.addItem(product, quantity, client);
@@ -55,6 +52,7 @@ public class ShoppingCartService {
 
         cart.getItems().clear();
     }
+
     public void deleteItem(int index) {
         if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER"))) {
             shoppingCartRepository.deleteItem(cart.getItems().get(index));
@@ -70,10 +68,17 @@ public class ShoppingCartService {
         return cart.getItems().stream().anyMatch(item -> item.getProduct().getId() == product.getId());
     }
 
-    public void changeQuantity(CartItem cartItem, int newQuantity) {
+    public int changeQuantity(CartItem cartItem, int newQuantity) {
+        if (newQuantity <= 0) {
+            newQuantity = 1;
+        } else if (newQuantity > cartItem.getProduct().getQuantity()) {
+            newQuantity = cartItem.getProduct().getQuantity();
+        }
         cartItem.setQuantity(newQuantity);
         if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER"))) {
             shoppingCartRepository.changeQuantity(cartItem, newQuantity);
         }
+
+        return newQuantity;
     }
 }

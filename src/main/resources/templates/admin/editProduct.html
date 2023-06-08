@@ -18,7 +18,7 @@
     </div>
     <hr>
     <form class="product-form"
-            th:action="@{/admin/product/edit(product=${product.id})}" method="post" th:object="${product}">
+          th:action="@{/admin/product/edit(product=${product.id})}" method="post" th:object="${product}">
         <div class="product-name-price-quantity">
             <div>
                 <label for="name">Název</label>
@@ -53,5 +53,7 @@
         <button class="potvrdit-btn" type="submit">Potvrdit změny</button>
     </form>
 </main>
+<div id="footer-spacer"></div>
+<footer th:replace="~{/admin/common/common :: footer}"></footer>
 </body>
 </html>

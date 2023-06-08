@@ -5,26 +5,51 @@
 <header th:replace="~{/admin/common/common :: header}"></header>
 <main>
     <h1>Produkty</h1>
-    <div class="tools">
-        <a th:href="@{/admin/product/add}">Přídat produkt</a>
-    </div>
-    <div class="product-list">
-        <div class="list-legend">
-            <p>Název produktu</p>
-            <p>Krátky popis</p>
-            <p>Množství na skladě</p>
-            <p>Cena</p>
-            <p>Kategorie</p>
+    <div class="toolbar">
+        <select name="category" form="filterForm"
+                onchange="if ($('select[name = category]').find(':selected').val() == 'all') {
+                            window.location.replace('/admin/products')}
+                            else {
+                                $('#filterForm').submit()
+                            }">
+            <option value="all" th:selected="${selectedCategory == null}">Vše</option>
+            <option th:each="cat : ${categories}" th:value="${@diacriticHandler.makeURL(cat.name)}"
+                    th:selected="${selectedCategory != null && cat.id == selectedCategory.id}"
+                    th:text="${cat.getName()}"></option>
+        </select>
+        <div id="search">
+            <form th:action="@{/admin/products}" method="get" id="filterForm">
+                <button type="submit"></button>
+                <input type="search" name="search" th:value="${param.search}">
+            </form>
         </div>
-        <div th:each="product : ${products}">
-            <p th:text="${product.name}">Nazev</p>
-            <p th:text="${product.descriptionShort}">Popis</p>
-            <p th:text="${product.quantity}">Quantity</p>
-            <p th:text="${#numbers.formatDecimal(product.price, 0, 0) + ' Kč'}">Cena</p>
-            <p th:text="${product.getCategory().name}"></p>
-            <p><a th:href="@{/admin/product/edit(product=${product.id})}">Upravit</a></p>
+        <div class="tools">
+            <a th:href="@{/admin/product/add}">Přídat produkt</a>
         </div>
     </div>
+    <table class="product-list" id="table">
+        <thead class="list-legend">
+        <tr>
+            <th onclick="sortTable(0)">Název produktu</th>
+            <th onclick="sortTable(1)">Krátky popis</th>
+            <th onclick="sortTable(2)">Množství na skladě</th>
+            <th onclick="sortTable(3)">Cena</th>
+            <th onclick="sortTable(4)">Kategorie</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.name}">Nazev</td>
+            <td th:text="${product.descriptionShort}">Popis</td>
+            <td th:text="${product.quantity}">Quantity</td>
+            <td th:text="${#numbers.formatDecimal(product.price, 0, 0) + ' Kč'}">Cena</td>
+            <td th:text="${product.getCategory().name}"></td>
+            <td><a th:href="@{/admin/product/edit(product=${product.id})}">Upravit</a></td>
+        </tr>
+        </tbody>
+    </table>
 </main>
+<div id="footer-spacer"></div>
+<footer th:replace="~{/admin/common/common :: footer}"></footer>
 </body>
 </html>

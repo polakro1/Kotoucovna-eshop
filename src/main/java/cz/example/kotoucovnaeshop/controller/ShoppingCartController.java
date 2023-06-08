@@ -1,10 +1,10 @@
 package cz.example.kotoucovnaeshop.controller;
 
 import cz.example.kotoucovnaeshop.model.*;
+import cz.example.kotoucovnaeshop.service.CustomerService;
 import cz.example.kotoucovnaeshop.service.ProductService;
 import cz.example.kotoucovnaeshop.service.ShoppingCartService;
 import cz.example.kotoucovnaeshop.service.TypesAndStatesService;
-import cz.example.kotoucovnaeshop.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -34,44 +33,18 @@ public class ShoppingCartController {
 
     @Autowired
     private SmartValidator validator;
+
     @GetMapping("/cart")
     public String showCart(Model model) {
         return "shoppingCart";
     }
+
     @PostMapping("cart/add")
     public String addItem(@ModelAttribute("productid") long productid) {
         Product product = productService.getProduct(productid);
-        cartService.addItem(product,1);
+        cartService.addItem(product, 1);
         return "redirect:/cart";
     }
-
-
-/*
-    @PostMapping("/cart")
-    public String changeQuantity(@Valid Cart cartForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "redirect:/cart";
-        }
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        for (CartItem cartItemSession:
-             cart.getItems()) {
-            for (CartItem cartItemForm:
-                 cartForm.getItems()) {
-                if (cartItemSession.getId() == cartItemForm.getId() && cartItemSession.getQuantity() != cartItemForm.getQuantity()) {
-                    cartItemSession.setQuantity(cartItemForm.getQuantity());
-                    if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER"))) {
-
-                    }
-                }
-            }
-        }
-
-        return "redirect:/cart";
-    }
-
- */
 
     @GetMapping("/cart/checkout1")
     public String checkout1(Model model) {
@@ -102,11 +75,10 @@ public class ShoppingCartController {
         order.setPaymentType(typesAndStatesService.getPaymentType(paymentTypeId));
         order.setShippingType(typesAndStatesService.getShippingType(shippingTypeId));
         session.setAttribute("order", order);
-        System.out.println(paymentTypeId);
-        System.out.println(order.getShippingType().getName());
 
         return "redirect:/cart/checkout2";
     }
+
     @GetMapping("/cart/checkout2")
     public String checkout(Model model, @SessionAttribute Order order) {
         Client client = new Client();
@@ -126,12 +98,12 @@ public class ShoppingCartController {
         model.addAttribute(order);
         return "checkout2";
     }
+
     @PostMapping("/cart/checkout2")
     public String checkout(Order orderForm,
                            BindingResult bindingResult,
                            @SessionAttribute Order order,
-                           boolean adressesAreSame,
-                           Model model) {
+                           boolean adressesAreSame) {
         orderForm.getShippingAdress().setPostalCode(orderForm.getShippingAdress().getPostalCode().replace(" ", ""));
         orderForm.getBillingAdress().setPostalCode(orderForm.getBillingAdress().getPostalCode().replace(" ", ""));
 
@@ -141,11 +113,6 @@ public class ShoppingCartController {
 
         validator.validate(orderForm, bindingResult);
 
-        for (ObjectError error:
-             bindingResult.getAllErrors()) {
-            System.out.println(error);
-
-        }
         if (bindingResult.hasErrors()) {
 
             return "checkout2";
@@ -155,16 +122,6 @@ public class ShoppingCartController {
         order.setShippingAdress(orderForm.getShippingAdress());
         order.setBillingAdress(orderForm.getBillingAdress());
 
-        System.out.println(order.getShippingAdress().getStreet());
-        System.out.println(order.getShippingAdress().getBuildingNumber());
-        System.out.println(order.getShippingAdress().getCity());
-        System.out.println(order.getShippingAdress().getPostalCode());
-        System.out.println(order.getShippingAdress().getCountry());
-        System.out.println(order.getBillingAdress().getStreet());
-        System.out.println(order.getBillingAdress().getBuildingNumber());
-        System.out.println(order.getBillingAdress().getCity());
-        System.out.println(order.getBillingAdress().getPostalCode());
-        System.out.println(order.getBillingAdress().getCountry());
         return "redirect:/cart/checkout3";
     }
 
@@ -189,16 +146,7 @@ public class ShoppingCartController {
 
         Product product = productService.getProduct(cartItem.getProduct().getId());
 
-        if (quantity <= 0) {
-            payload.put("quantity", 1);
-            return payload;
-        }
-        if (quantity > product.getQuantity()) {
-            payload.put("quantity", product.getQuantity());
-            return payload;
-        }
-
-        cartService.changeQuantity(cartItem, quantity);
+        payload.put("quantity", cartService.changeQuantity(cartItem, quantity));
         payload.put("sumPrice", cart.getSumPrice());
 
         return payload;

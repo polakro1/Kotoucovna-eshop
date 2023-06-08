@@ -4,24 +4,32 @@
 <body>
 <header th:replace="~{common/header :: header}"/>
 <main>
-  <div class="item-detail">
-    <h1 th:text="${product.name}"></h1>
-    <div class="item-detail-img">
-      <img th:src="${product.image.path}" alt="Obrázek zboží">
+    <div class="item-detail">
+        <h1 th:text="${product.name}"></h1>
+        <div class="item-detail-img">
+            <img th:src="${product.image.path}" alt="Obrázek zboží">
+        </div>
+        <p th:text="${product.descriptionShort}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate
+            libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per
+            conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis.</p>
+        <p class="cena" th:text="${#numbers.formatDecimal(product.price, 0, 0) + ' Kč'}">499 Kč</p>
+        <div class="item-actions">
+            <p th:if="${product.quantity > 0}" class="skladem">Skladem</p>
+            <p th:if="${product.quantity < 1}" class="neni-skladem">Není skladem</p>
+            <form th:action="@{/cart/add}" method="post">
+                <button th:unless="${@shoppingCartService.isInCart(product)}" type="submit" name="productid"
+                        th:value="${product.id}" class="do-kosiku-btn" th:disabled="${product.quantity < 1}">Do košíku
+                </button>
+                <button th:if="${@shoppingCartService.isInCart(product)}" class="do-kosiku-btn" disabled>V košíku
+                </button>
+            </form>
+        </div>
+        <p th:text="${product.description}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate
+            libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per
+            conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis.</p>
     </div>
-    <p th:text="${product.descriptionShort}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis.</p>
-    <p class="cena" th:text="${#numbers.formatDecimal(product.price, 0, 0) + ' Kč'}">499 Kč</p>
-    <div class="item-actions">
-      <p th:if="${product.quantity > 0}" class="skladem">Skladem</p>
-      <p th:if="${product.quantity < 1}" class="neni-skladem">Není skladem</p>
-      <form th:action="@{/cart/add}" method="post">
-        <button th:unless="${@shoppingCartService.isInCart(product)}" type="submit" name="productid" th:value="${product.id}" class="do-kosiku-btn" th:disabled="${product.quantity < 1}">Do košíku</button>
-        <button th:if="${@shoppingCartService.isInCart(product)}" class="do-kosiku-btn" disabled>V košíku</button>
-      </form>
-    </div>
-    <p th:text="${product.description}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis.</p>
-  </div>
 </main>
-<footer th:replace="~{common/header :: footer}"/>
+<div id="footer-spacer"></div>
+<footer th:replace="~{common/header :: footer}"></footer>
 </body>
 </html>

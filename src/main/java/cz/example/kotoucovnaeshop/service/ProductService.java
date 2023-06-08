@@ -80,8 +80,24 @@ public class ProductService {
         repository.changeImage(image, product);
     }
 
-    public List<Product> getMatchedByName(String name, String orderBy) {
+    public List<Product> getByName(String name, String orderBy) {
         return repository.matchByName(name, orderBy);
+    }
+
+    public List<Product> getByNameAndCategory(String name, Category category, String orderBy) {
+        return repository.getByNameAndCategory(name, category, orderBy);
+    }
+
+    public long getNumberOfProducts() {
+        return repository.getNumberOfProducts();
+    }
+
+    public long getNumberOfLowQuantityProducts() {
+        return repository.getNumberOfLowQuantityProducts();
+    }
+
+    public long getNumberOfOutOfStockProducts() {
+        return repository.getNumberOfOutOfStockProducts();
     }
 
     public ProductRepository getRepository() {

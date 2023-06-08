@@ -45,6 +45,7 @@ public class SecurityConfiguration {
             "/css/**",
             "/fonts/**",
             "/images/**",
+            "/scripts/**",
             "/login-user",
             "/*/produkty",
             "/*/produkt/**",
@@ -84,30 +85,30 @@ public class SecurityConfiguration {
 
     @Bean
     @Order(2)
-    public SecurityFilterChain filterChain (HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authenticationProvider(userAuthenticationProvider())
                 .csrf().disable()
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PUBLIC_MATCHERS).permitAll()
                         .requestMatchers("/ucet").hasAuthority("USER")
-                         )
+                )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll()
                         .successHandler(customerLoginHandler)
-                        )
+                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .logoutSuccessHandler(logoutHandler)
-                        );
+                );
         return http.build();
     }
 
     @Bean
-    public   DaoAuthenticationProvider adminAuthenticationProvider() {
+    public DaoAuthenticationProvider adminAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(adminDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder);
@@ -116,7 +117,7 @@ public class SecurityConfiguration {
 
 
     @Bean
-    public   DaoAuthenticationProvider userAuthenticationProvider() {
+    public DaoAuthenticationProvider userAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(customerDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder);
@@ -124,6 +125,7 @@ public class SecurityConfiguration {
     }
 
 }
+
 @Component
 class CustomerAuthenticationSuccesHandler extends SavedRequestAwareAuthenticationSuccessHandler {
     @Autowired

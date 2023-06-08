@@ -5,8 +5,7 @@ public class ShippingType {
     private String name;
     private int price;
 
-    public ShippingType() {
-    }
+    public ShippingType() {}
 
     public ShippingType(long id, String name, int price) {
         this.id = id;

@@ -1,7 +1,6 @@
 package cz.example.kotoucovnaeshop.repository.impl;
 
 import cz.example.kotoucovnaeshop.model.Image;
-import cz.example.kotoucovnaeshop.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

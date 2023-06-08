@@ -16,7 +16,7 @@ public class SearchController {
     private ProductService productService;
 
     @GetMapping("/search")
-    public String search(@RequestParam String search, Model model,  String sortBy) {
+    public String search(@RequestParam String search, Model model, String sortBy) {
         model.addAttribute("searchValue", search);
 
         if (sortBy == null) {
@@ -24,7 +24,7 @@ public class SearchController {
         }
         model.addAttribute("sortBy", sortBy);
 
-        List<Product> products = productService.getMatchedByName(search, sortBy);
+        List<Product> products = productService.getByName(search, sortBy);
         model.addAttribute("products", products);
 
         return "search";

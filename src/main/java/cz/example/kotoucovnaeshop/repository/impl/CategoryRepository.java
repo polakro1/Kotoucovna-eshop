@@ -6,10 +6,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public class CategoryRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
     public List<Category> getAllCategories() {
         List<Category> categories = jdbcTemplate.query(
                 "select kategorieid, nazev, nadkategorie from kategorie",
@@ -53,11 +55,11 @@ public class CategoryRepository {
                     return newCategory;
                 }, name
         );
-          return category;
+        return category;
     }
 
     public List<Category> getSubcategories(Category category) {
-        List<Category>  subcategories = jdbcTemplate.query(
+        List<Category> subcategories = jdbcTemplate.query(
                 "select kategorieid, nazev, nadkategorie from kategorie where nadkategorie = ?",
                 (rs, rowNum) -> {
                     Category subcategory = new Category(

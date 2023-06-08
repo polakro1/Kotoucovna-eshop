@@ -6,8 +6,7 @@ public class OrderItem {
     private int quantity;
     private double price;
 
-    public OrderItem() {
-    }
+    public OrderItem() {}
 
     public OrderItem(long id, Product product, int quantity, double price) {
         this.id = id;

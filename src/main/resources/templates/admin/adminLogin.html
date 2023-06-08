@@ -2,16 +2,20 @@
 <html lang="cs" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/admin/common/common :: head ('Přihlášení')}"></head>
 <body>
-<h1>Admin login</h1>
-<div class="login">
-    <form action="login" th:action="@{/admin/login}" method="post">
-        <label for="username">Přihlašovací jméno</label>
-        <input type="text" id="username" name="username">
-        <label for="password">Heslo</label>
-        <input type="password" id="password" name="password">
-        <div th:if="${param.error}" class="error">Špatné přihlašovací jméno nebo heslo</div>
-        <button class="potvrdit-btn" type="submit">Přihlásit</button>
-    </form>
-</div>
+<main>
+    <h1>Admin login</h1>
+    <div class="login">
+        <form action="login" th:action="@{/admin/login}" method="post">
+            <label for="username">Přihlašovací jméno</label>
+            <input type="text" id="username" name="username">
+            <label for="password">Heslo</label>
+            <input type="password" id="password" name="password">
+            <div th:if="${param.error}" class="error">Špatné přihlašovací jméno nebo heslo</div>
+            <button class="potvrdit-btn" type="submit">Přihlásit</button>
+        </form>
+    </div>
+</main>
+<div id="footer-spacer"></div>
+<footer th:replace="~{/admin/common/common :: footer}"></footer>
 </body>
 </html>

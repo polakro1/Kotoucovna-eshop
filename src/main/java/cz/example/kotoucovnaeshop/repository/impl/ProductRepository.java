@@ -1,6 +1,9 @@
 package cz.example.kotoucovnaeshop.repository.impl;
 
-import cz.example.kotoucovnaeshop.model.*;
+import cz.example.kotoucovnaeshop.model.Category;
+import cz.example.kotoucovnaeshop.model.Employee;
+import cz.example.kotoucovnaeshop.model.Image;
+import cz.example.kotoucovnaeshop.model.Product;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -64,11 +67,13 @@ public class ProductRepository {
 
         return product;
     };
+
     @PostConstruct
     private void initProcAddProduct() {
         procAddProduct = new SimpleJdbcCall(jdbcTemplate)
                 .withProcedureName("pridej_produkt");
     }
+
     @PostConstruct
     private void initProcDeleteProduct() {
         procDeleteProduct = new SimpleJdbcCall(jdbcTemplate)
@@ -104,7 +109,7 @@ public class ProductRepository {
     public Product getProductByName(String name) {
         Product product = jdbcTemplate.queryForObject(
                 sqlProduct +
-                "where nlssort(pnazev, 'NLS_SORT=BINARY_AI') = NLSSORT(?, 'NLS_SORT=BINARY_AI')",
+                        "where nlssort(pnazev, 'NLS_SORT=BINARY_AI') = NLSSORT(?, 'NLS_SORT=BINARY_AI')",
                 productRowMapper, name
         );
 
@@ -147,8 +152,7 @@ public class ProductRepository {
                 .addValue("in_zamestnanecid", product.getEmployee().getId())
                 .addValue("in_obrazek_nazev", product.getImage().getName())
                 .addValue("in_obrazek_pripona", product.getImage().getExtension())
-                .addValue("in_obrazek_cesta", product.getImage().getPath())
-        ;
+                .addValue("in_obrazek_cesta", product.getImage().getPath());
 
         Map out = procAddProduct.execute(in);
 
@@ -177,13 +181,42 @@ public class ProductRepository {
 
     public List<Product> matchByName(String name, String orderBy) {
         name = "%" + name + "%";
-        System.out.println(name);
         List<Product> products = jdbcTemplate.query(
                 sqlProduct +
-                    "where upper(pnazev) like upper(?) " +
-                    "order by " + orderBy,
+                        "where upper(pnazev) like upper(?) " +
+                        "order by " + orderBy,
                 productRowMapper, name
-                );
+        );
         return products;
+    }
+
+    public List<Product> getByNameAndCategory(String name, Category category, String orderBy) {
+        name = "%" + name + "%";
+        List<Product> products = jdbcTemplate.query(
+                sqlProduct +
+                        "where upper(pnazev) like upper(?) and (kategorieid = ? or " +
+                        "kategorieid in (select kategorieid from kategorie where nadkategorie = ?)) " +
+                        "order by " + orderBy,
+                productRowMapper, name, category.getId(), category.getId()
+        );
+        return products;
+    }
+
+    public long getNumberOfProducts() {
+        return jdbcTemplate.queryForObject(
+                "select produktu_celkem from pocty_produktu", Long.class
+        );
+    }
+
+    public long getNumberOfLowQuantityProducts() {
+        return jdbcTemplate.queryForObject(
+                "select produktu_s_nizkym_mnozstvim from pocty_produktu", Long.class
+        );
+    }
+
+    public long getNumberOfOutOfStockProducts() {
+        return jdbcTemplate.queryForObject(
+                "select produktu_neskladem from pocty_produktu", Long.class
+        );
     }
 }

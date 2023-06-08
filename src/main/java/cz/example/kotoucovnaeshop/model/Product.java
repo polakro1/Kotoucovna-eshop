@@ -1,10 +1,9 @@
 package cz.example.kotoucovnaeshop.model;
 
 
-import jakarta.validation.constraints.*;
-import org.springframework.format.annotation.NumberFormat;
-
-import java.security.Signature;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class Product {
     private long id;
@@ -24,8 +23,7 @@ public class Product {
 
     private Employee employee;
 
-    public Product() {
-    }
+    public Product() {}
 
     public Product(long id, double price, int quantity, String name, String descriptionShort, String description, Category category) {
         this.id = id;

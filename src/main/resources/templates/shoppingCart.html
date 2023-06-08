@@ -4,6 +4,9 @@
 <body>
 <header th:replace="~{common/header :: header}"/>
 <main>
+    <div class="msg-order-created" th:if="${createdOrder != null}">
+        <p th:text="${'Objednávka č. ' + createdOrder.id + ' vytvořena'}"></p>
+    </div>
     <h1>Košík</h1>
     <hr>
     <div>
@@ -39,28 +42,7 @@
         <a th:href="@{/suplementy/produkty}">Zpět k nákupu</a>
     </div>
 </main>
-<footer th:replace="~{common/header :: footer}"/>
-<div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
-        function updateCartItem(cartSessionIndex, quantity) {
-            $.ajax({
-                type: "POST",
-                url: "cart/updateQuantity",
-                data: JSON.stringify({cartSessionIndex: cartSessionIndex, quantity: quantity}),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-
-                success: function (result) {
-                    $("input[name=quantity" + cartSessionIndex +"]").val(result.quantity);
-                    $(".sumPrice").html(result.sumPrice + " Kč");
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log("Chyba při aktualizaci položky v košíku: " + textStatus + " - " + errorThrown);
-                }
-            });
-        }
-    </script>
-</div>
+<div id="footer-spacer"></div>
+<footer th:replace="~{common/header :: footer}"></footer>
 </body>
 </html>

@@ -3,7 +3,6 @@ package cz.example.kotoucovnaeshop.model;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import org.springframework.security.core.parameters.P;
 
 public class Client extends Account {
     @Pattern(regexp = "^[+]?[()/0-9. -]{9,}$")
@@ -11,8 +10,7 @@ public class Client extends Account {
     @Valid
     private Adress adress;
 
-    public Client() {
-    }
+    public Client() {}
 
     public Client(long id, String email, String password, String username, String name, String surname, String tel, Adress adress) {
         super(id, email, password, username, name, surname);

@@ -37,30 +37,32 @@ public class AccountController {
     }
 
     @PostMapping("/ucet")
-    public String account( Client client, BindingResult bindingResult) {
+    public String account(Client clientForm, BindingResult bindingResult, Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Client client = customerService.getByUsername(username);
+        model.addAttribute("client", client);
+        List<Order> orders = orderService.getOrdersByClient(client);
+        model.addAttribute("orders", orders);
 
-        client.getAdress().setPostalCode(client.getAdress().getPostalCode().replace(" ", ""));
+        clientForm.getAdress().setPostalCode(clientForm.getAdress().getPostalCode().replace(" ", ""));
 
-        if (!((client.getAdress().getBuildingNumber() == null || client.getAdress().getBuildingNumber().isEmpty()) &&
-                (client.getAdress().getStreet() == null || client.getAdress().getStreet().isEmpty()) &&
-                (client.getAdress().getCity() == null || client.getAdress().getCity().isEmpty()) &&
-                (client.getAdress().getPostalCode() == null || client.getAdress().getPostalCode().isEmpty()) &&
-                (client.getAdress().getCountry() == null || client.getAdress().getCountry().isEmpty()))) {
-            client.setAdress(client.getAdress());
+        if (!((clientForm.getAdress().getBuildingNumber() == null || clientForm.getAdress().getBuildingNumber().isEmpty()) &&
+                (clientForm.getAdress().getStreet() == null || clientForm.getAdress().getStreet().isEmpty()) &&
+                (clientForm.getAdress().getCity() == null || clientForm.getAdress().getCity().isEmpty()) &&
+                (clientForm.getAdress().getPostalCode() == null || clientForm.getAdress().getPostalCode().isEmpty()) &&
+                (clientForm.getAdress().getCountry() == null || clientForm.getAdress().getCountry().isEmpty()))) {
+            clientForm.setAdress(clientForm.getAdress());
         } else {
-            client.setAdress(null);
+            clientForm.setAdress(null);
         }
 
-        validator.validate(client, bindingResult, Account.WithoutPassword.class);
+        validator.validate(clientForm, bindingResult, Account.WithoutPassword.class);
 
         if (bindingResult.hasErrors()) {
             return "account";
         }
 
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        client.setId(customerService.getByUsername(username).getId());
-
-        customerService.editClientDetails(client);
+        customerService.editClientDetails(clientForm);
 
         return "account";
     }

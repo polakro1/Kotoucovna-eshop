@@ -15,6 +15,7 @@ public class CategoryService {
     public Category getCategory(long id) {
         return categoryRepository.getById(id);
     }
+
     public Category getCategory(String name) {
         return categoryRepository.getByName(name);
     }
@@ -23,9 +24,12 @@ public class CategoryService {
         url = url.replaceAll("-", " ");
         return categoryRepository.getByName(url);
     }
+
     public List<Category> getAllCategories() {
         return categoryRepository.getAllCategories();
     }
 
-    public List<Category> getSubcategories(Category category){return categoryRepository.getSubcategories(category);}
+    public List<Category> getSubcategories(Category category) {
+        return categoryRepository.getSubcategories(category);
+    }
 }

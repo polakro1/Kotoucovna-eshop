@@ -1,5 +1,6 @@
 package cz.example.kotoucovnaeshop.controller;
 
+import cz.example.kotoucovnaeshop.model.Category;
 import cz.example.kotoucovnaeshop.model.Product;
 import cz.example.kotoucovnaeshop.service.CategoryService;
 import cz.example.kotoucovnaeshop.service.ProductService;
@@ -21,21 +22,56 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping("/{category}/produkt/{productName}")
+    public String productDetail(@PathVariable String productName, Model model) {
+        productName = productName.replaceAll("-", " ");
+        Product product = productService.getProduct(productName);
+        model.addAttribute("product", product);
+
+        return "productDetail";
+    }
+
+
     @GetMapping("/admin/products")
-    public String manageProducts(Model model) {
-        List<Product> products = productService.findAll();
+    public String searchProducts(@RequestParam(value = "search", required = false) String search,
+                                 @RequestParam(value = "category", required = false) String categoryName,
+                                 Model model) {
+        List<Product> products;
+        Category selectedCategory = null;
+
+        if (categoryName != null) {
+            selectedCategory = categoryService.getCategoryByUrl(categoryName);
+
+            if (search != null) {
+                products = productService.getByNameAndCategory(search, selectedCategory, productService.getRepository().NAME_ASC);
+            } else {
+                products = productService.getAllProductsInCategory(selectedCategory, productService.getRepository().NAME_ASC);
+            }
+        } else {
+            if (search != null) {
+                products = productService.getByName(search, productService.getRepository().NAME_ASC);
+            } else {
+                products = productService.findAll();
+            }
+        }
+
         model.addAttribute("products", products);
-        System.out.println(products.size());
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("selectedCategory", selectedCategory);
+
         return "admin/productsList";
     }
 
     @GetMapping("/admin/product/add")
     public String addProduct(Model model) {
         Product product = new Product();
+
         model.addAttribute("product", product);
         model.addAttribute("categories", categoryService.getAllCategories());
+
         return "admin/addProduct";
     }
+
     @PostMapping("/admin/product/add")
     public String addProduct(@Valid Product product,
                              BindingResult bindingResult,
@@ -57,10 +93,13 @@ public class ProductController {
     @GetMapping("/admin/product/edit")
     public String editProduct(@RequestParam("product") Long productId, Model model) {
         Product product = productService.getProduct(productId);
+
         model.addAttribute("product", product);
         model.addAttribute("categories", categoryService.getAllCategories());
+
         return "admin/editProduct";
     }
+
     @PostMapping("/admin/product/edit")
     public String editProduct(@Valid Product product,
                               BindingResult bindingResult,
@@ -78,12 +117,12 @@ public class ProductController {
 
         return "redirect:/admin/product/edit?product=" + productId;
     }
+
     @PostMapping("/admin/product/delete")
     public String deleteProduct(@ModelAttribute("productid") long productid) throws IOException {
         Product product = new Product();
         product.setId(productid);
         productService.delete(product);
-        System.out.println(product.getId());
         return "redirect:/admin/products";
     }
 
@@ -103,15 +142,5 @@ public class ProductController {
         productService.changeImage(imageFile, product);
 
         return "redirect:/admin/product/edit?product=" + productId;
-    }
-
-    @GetMapping("/{category}/produkt/{productName}")
-    public String productDetail(@PathVariable String productName, Model model) {
-        System.out.println(productName);
-        productName = productName.replaceAll("-", " ");
-        Product product = productService.getProduct(productName);
-        model.addAttribute("product", product);
-
-        return "productDetail";
     }
 }

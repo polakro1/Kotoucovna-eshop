@@ -2,44 +2,47 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{common/header :: head ('Objednávka - Způsoby platby')}"/>
 <body>
-<header th:replace="~{common/header :: header}" />
-<h1>Objednávka</h1>
-<div class="kosik-kroky">
-    <div id="aktivni-krok" >Platba a doprava</div>
-    <div>Dodací údaje</div>
-    <div>Shrnutí a platba</div>
-</div>
-<hr>
-<form th:action="@{/cart/checkout1}" method="post" class="zpusoby-objednavky-form">
-    <div>
-        <div>
-            <h3>Způsoby platby</h3>
-            <hr>
-            <span class="error" th:if="${paymentTypeIdEmpty}">Zadejte způsob platby</span>
-            <div th:each="paymentType : ${paymentTypes}" class="zpusob-objednavky">
-                <label th:for="${paymentType.name}">
-                    <p th:text="${paymentType.name}"></p>
-                    <p th:text="${paymentType.price } + ' Kč'"></p>
-                </label>
-                <input type="radio" name="paymentTypeId" th:id="${paymentType.name}" th:value="${paymentType.id}">
-            </div>
-        </div>
-        <div>
-            <h3>Způsob dopravy</h3>
-            <hr>
-            <span class="error" th:if="${shippingTypeIdEmpty}">Zadejte způsob dopravy</span>
-            <div th:each="shippingType : ${shippingTypes}" class="zpusob-objednavky">
-                <label th:for="${shippingType.name}">
-                    <p th:text="${shippingType.name}"></p>
-                    <p th:text="${shippingType.price } + ' Kč'"></p>
-                </label>
-                <input type="radio" name="shippingTypeId" th:id="${shippingType.name}" th:value="${shippingType.id}">
-            </div>
-        </div>
+<header th:replace="~{common/header :: header}"/>
+<main>
+    <h1>Objednávka</h1>
+    <div class="kosik-kroky">
+        <div id="aktivni-krok">Platba a doprava</div>
+        <div>Dodací údaje</div>
+        <div>Shrnutí a platba</div>
     </div>
-    <button class="potvrdit-btn" type="submit">Pokračovat v objednávce</button>
-
-</form>
-<footer th:replace="~{common/header :: footer}"/>
+    <hr>
+    <form th:action="@{/cart/checkout1}" method="post" class="zpusoby-objednavky-form">
+        <div>
+            <div>
+                <h3>Způsoby platby</h3>
+                <hr>
+                <span class="error" th:if="${paymentTypeIdEmpty}">Zadejte způsob platby</span>
+                <div th:each="paymentType : ${paymentTypes}" class="zpusob-objednavky">
+                    <label th:for="${paymentType.name}">
+                        <p th:text="${paymentType.name}"></p>
+                        <p th:text="${paymentType.price } + ' Kč'"></p>
+                    </label>
+                    <input type="radio" name="paymentTypeId" th:id="${paymentType.name}" th:value="${paymentType.id}">
+                </div>
+            </div>
+            <div>
+                <h3>Způsob dopravy</h3>
+                <hr>
+                <span class="error" th:if="${shippingTypeIdEmpty}">Zadejte způsob dopravy</span>
+                <div th:each="shippingType : ${shippingTypes}" class="zpusob-objednavky">
+                    <label th:for="${shippingType.name}">
+                        <p th:text="${shippingType.name}"></p>
+                        <p th:text="${shippingType.price } + ' Kč'"></p>
+                    </label>
+                    <input type="radio" name="shippingTypeId" th:id="${shippingType.name}"
+                           th:value="${shippingType.id}">
+                </div>
+            </div>
+        </div>
+        <button class="potvrdit-btn" type="submit">Pokračovat v objednávce</button>
+    </form>
+</main>
+<div id="footer-spacer"></div>
+<footer th:replace="~{common/header :: footer}"></footer>
 </body>
 </html>

@@ -1,6 +1,5 @@
 package cz.example.kotoucovnaeshop.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Min;
 
 public class CartItem {
@@ -9,9 +8,7 @@ public class CartItem {
     private int quantity;
     private long id;
 
-    public CartItem(){
-
-    }
+    public CartItem() {}
 
     public CartItem(Product product, int quantity) {
         this.product = product;

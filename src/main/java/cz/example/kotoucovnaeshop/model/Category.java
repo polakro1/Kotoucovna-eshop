@@ -1,14 +1,11 @@
 package cz.example.kotoucovnaeshop.model;
 
-import java.util.List;
-
 public class Category {
     private long id;
     private String name;
     private Long superCategory;
 
-    public Category() {
-    }
+    public Category() {}
 
     public Category(Long id, String name, Long superCategory) {
         this.id = id;

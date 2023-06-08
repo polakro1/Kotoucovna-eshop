@@ -1,6 +1,5 @@
 package cz.example.kotoucovnaeshop.model;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -22,8 +21,7 @@ public class Adress {
     @NotBlank
     private String country;
 
-    public Adress() {
-    }
+    public Adress() {}
 
     public Adress(long id, String street, String buildingNumber, String city, String postalCode, String country) {
         this.id = id;

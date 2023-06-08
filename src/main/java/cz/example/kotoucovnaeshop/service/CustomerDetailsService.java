@@ -23,13 +23,11 @@ public class CustomerDetailsService implements org.springframework.security.core
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Client client = userRepository.findByUsername(username);
-        System.out.println(client.getPassword());
         User user = new User(client.getUsername(), client.getPassword(),
                 client.getRoles().stream()
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList())
         );
-        System.out.println(client.getRoles());
         return user;
     }
 
@@ -38,6 +36,5 @@ public class CustomerDetailsService implements org.springframework.security.core
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
                 userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
     }
 }

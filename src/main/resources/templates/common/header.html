@@ -1,84 +1,90 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head th:fragment="head (title)">
     <meta charset="UTF-8">
     <title th:text="${title == null ? 'Kotoučovna - eshop': title + ' | Kotoučovna - eshop'}"></title>
     <link href="/css/style3.css" rel="stylesheet" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/images/icons/favicon.svg" sizes="any" type="image/svg+xml">
+    <script src="/scripts/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type = "text/JavaScript" src = " https://MomentJS.com/downloads/moment.js"></script>
 </head>
 <body>
-  <header th:fragment="header">
+<header th:fragment="header">
     <div id="header-left">
-      <a href="../">
-        <image src="/images/Logo.svg" alt="Kotoučovna eshop logo"></image>
-      </a>
+        <a href="../">
+            <image src="/images/Logo.svg" alt="Kotoučovna eshop logo"></image>
+        </a>
     </div>
     <div id="header-center">
-      <div id="search">
-        <form th:action="@{/search}" method="get">
-          <button type="submit"></button>
-          <input type="search" name="search">
-        </form>
-      </div>
-      <nav>
-        <ul>
-          <li>
-            <a href="/suplementy/produkty">Suplementy</a>
-          </li>
-          <li>
-            <a href="/obleceni/produkty">Oblečení</a>
-          </li>
-          <li>
-            <a href="/doplnky/produkty">Doplňky</a>
-          </li>
-        </ul>
-      </nav>
+        <div id="search">
+            <form th:action="@{/search}" method="get">
+                <button type="submit"></button>
+                <input type="search" name="search">
+            </form>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/suplementy/produkty">Suplementy</a>
+                </li>
+                <li>
+                    <a href="/obleceni/produkty">Oblečení</a>
+                </li>
+                <li>
+                    <a href="/doplnky/produkty">Doplňky</a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div id="header-right">
-      <div>
         <div>
-          <a th:href="@{/ucet}">
-            <img src="/images/icons/account_icon.svg" alt="account_icon" width="30px">
-          </a>
-          <a th:href="@{/login}" sec:authorize="isAnonymous()">Přihlášení</a>
-          <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Odhlásit</a>
+            <div>
+                <a th:href="@{/ucet}">
+                    <img src="/images/icons/account_icon.svg" alt="account_icon" width="30px">
+                </a>
+                <a th:href="@{/login}" sec:authorize="isAnonymous()">Přihlášení</a>
+                <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Odhlásit</a>
+            </div>
+            <a class="sumPrice" th:href="@{/cart}" id="kosik"
+               th:text="${#numbers.formatDecimal(@cart.getSumPrice(), 0, 0) + ' Kč'}">1050
+                Kč</a>
         </div>
-        <a th:href="@{/cart}" id="kosik" th:text="${#numbers.formatDecimal(@cart.getSumPrice(), 0, 0) + ' Kč'}">1050 Kč</a>
-      </div>
     </div>
-  </header>
+</header>
 <footer id="footer-fix" th:fragment="footer">
-  <div>
     <div>
-      <h3>Fitness centrum Kotoučovna</h3>
-      <p>Orlická 245</p>
-      <p>Třebechovice pod Orebem</p>
-      <p>503 46</p>
+        <div>
+            <h3>Fitness centrum Kotoučovna</h3>
+            <p>Orlická 245</p>
+            <p>Třebechovice pod Orebem</p>
+            <p>503 46</p>
+        </div>
+        <div class="odkazy">
+            <a>
+                <img src="/images/icons/tel_icon.svg" alt="Telefon">
+                <p>697 728 543</p>
+            </a>
+            <a>
+                <img src="/images/icons/email_icon.svg" alt="Email">
+                <p>info@kotoucovna.cz</p>
+            </a>
+            <div id="footer-icons">
+                <a><img src="/images/icons/facebook_icon.svg" alt="Facebook"></a>
+                <a><img src="/images/icons/instagram_icon.svg" alt="Instagram"></a>
+                <a><img src="/images/icons/tiktok_icon.svg" alt="TikTok"></a>
+            </div>
+        </div>
+        <div>
+            <nav>
+                <a th:href="@{/suplementy/produkty}">Suplementy</a>
+                <a th:href="@{/obleceni/produkty}">Oblečení</a>
+                <a th:href="@{/doplnky/produkty}">Doplňky</a>
+            </nav>
+        </div>
     </div>
-    <div class="odkazy">
-      <a>
-        <img src="/images/icons/tel_icon.svg" alt="Telefon">
-        <p>697 728 543</p>
-      </a>
-      <a>
-        <img src="/images/icons/email_icon.svg" alt="Email">
-        <p>info@kotoucovna.cz</p>
-      </a>
-      <div id="footer-icons">
-        <a><img src="/images/icons/facebook_icon.svg" alt="Facebook"></a>
-        <a><img src="/images/icons/instagram_icon.svg" alt="Instagram"></a>
-        <a><img src="/images/icons/tiktok_icon.svg" alt="TikTok"></a>
-      </div>
-    </div>
-    <div>
-      <nav>
-        <a th:href="@{/suplementy/produkty}">Suplementy</a>
-        <a th:href="@{/obleceni/produkty}">Oblečení</a>
-        <a th:href="@{/doplnky/produkty}">Doplňky</a>
-      </nav>
-    </div>
-  </div>
 </footer>
 </body>
 </html>

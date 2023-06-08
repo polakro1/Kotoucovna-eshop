@@ -21,6 +21,7 @@ public class AdminRepository {
         newEmployee.addRole("ADMIN");
         return newEmployee;
     });
+
     public Employee getByUsername(String username) {
         Employee employee = jdbcTemplate.queryForObject(
                 "select zamestnanecid, email, prihlasovaci_jmeno, heslo, jmeno, prijmeni from zamestnanci " +
